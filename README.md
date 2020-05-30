@@ -1,17 +1,17 @@
-# cypress-onisep
+# cypress-almady
 
 *Ce depôt git contient l'arborescence des tests et configurations afin de tester
-l'IHM  du projet ONISEP en utilisant l'outil Cypress*
+l'IHM  du projet ALMADY en utilisant l'outil Cypress*
 
 ## Setup
 
 ###Version
-NodeJS : v9.9.0
+NodeJS : v11.0.0
 Cypress : 1.0.0
-npm : 5.6.0
+npm : 6.4.0
 
 ###Lien
-le lien de l'IHM de test est : "http://moa.onisep.pymma-software.net/"
+*Not constant yet*
 
 ## Jenkins
 
@@ -38,3 +38,6 @@ les builds sont paramétrables dans la section Configurer après avoir crée un 
    -- Description : correspond à un message de description sur les différents choix
 3- Dans la section build,cliquer sur ajouter une étape au build, puis selectionner Executer un script shell
 4- Remplir la case commande(correspondant à une commande shell. la variable X remplit précedemment peut être utilisé dans la commande shell de la facon suivante : "$nom-de-la-variable" dans notre cas ici "$X"
+
+
+###Obtention des Résultats des tests[After Built]
