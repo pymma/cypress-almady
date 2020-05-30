@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0" tests="16" failures="0" skipped="16">
+  <testsuite name="Root Suite" timestamp="2020-05-30T16:56:41" tests="0" file="cypress/integration/features/Driver.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Driver" timestamp="2020-05-30T16:56:42" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Register a Driver" timestamp="2020-05-30T16:56:42" tests="7" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Register Location" timestamp="2020-05-30T16:57:09" tests="4" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Driver List" timestamp="2020-05-30T16:57:16" tests="5" failures="0" time="0">
+  </testsuite>
+</testsuites>

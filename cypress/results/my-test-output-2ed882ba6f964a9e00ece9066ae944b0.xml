@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0" tests="2" failures="0" skipped="2">
+  <testsuite name="Root Suite" timestamp="2020-05-28T23:21:00" tests="0" file="cypress/integration/authentification/Create-Delete-Account.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Authentification" timestamp="2020-05-28T23:21:00" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Account" timestamp="2020-05-28T23:21:00" tests="2" failures="0" time="0">
+  </testsuite>
+</testsuites>

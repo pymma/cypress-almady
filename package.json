@@ -1,0 +1,41 @@
+{
+  "name": "cypress-almady-test",
+  "version": "1.0.0",
+  "description": "test almady IHM with cypress tools",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run:dev": "cypress run --env DEPLOYMENT_ENV=dev",
+    "cy:run:chrome:dev": "cypress run --browser chrome --env DEPLOYMENT_ENV=dev",
+    "cy:run:firefox:dev": "cypress run --browser firefox --env DEPLOYMENT_ENV=dev",
+    "cy:run:electron:dev": "cypress run --browser electron --env DEPLOYMENT_ENV=dev",
+    "cy:run:testing": "cypress run --env DEPLOYMENT_ENV=testing",
+    "cy:run:chrome:testing": "cypress run --browser chrome --env DEPLOYMENT_ENV=testing",
+    "cy:run:firefox:testing": "cypress run --browser firefox --env DEPLOYMENT_ENV=testing",
+    "cy:run:electron:testing": "cypress run --browser electron --env DEPLOYMENT_ENV=testing",
+    "cy:run:staging": "cypress run  --env DEPLOYMENT_ENV=staging",
+    "cy:run:chrome:staging": "cypress run --browser chrome --env DEPLOYMENT_ENV=staging",
+    "cy:run:firefox:staging": "cypress run --browser firefox --env DEPLOYMENT_ENV=staging",
+    "cy:run:electron:staging": "cypress run --browser electron --env DEPLOYMENT_ENV=staging",
+    "cy:run:prod": "cypress run",
+    "cy:run:chrome:prod": "cypress run --browser chrome --env DEPLOYMENT_ENV=prod",
+    "cy:run:firefox:prod": "cypress run --browser firefox --env DEPLOYMENT_ENV=prod",
+    "cy:run:electron:prod": "cypress run --browser electron --env DEPLOYMENT_ENV=prod",
+    "start-jenkins-server": "java -jar jenkins.war -httpPort=8080 --enable-future-java"
+  },
+  "keywords": [
+    "cypress",
+    "automation",
+    "almady",
+    "IHM"
+  ],
+  "author": "Fofana Cheick",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^4.7.0",
+    "cypress-file-upload": "^4.0.7",
+    "mocha": "^7.2.0",
+    "mochawesome": "^6.1.1",
+    "mochawesome-merge": "^4.0.3"
+  }
+}

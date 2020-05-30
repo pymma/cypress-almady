@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="19.413" tests="12" failures="1" skipped="10">
+  <testsuite name="Root Suite" timestamp="2020-05-30T16:58:04" tests="0" file="cypress/integration/features/Trips.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Trips" timestamp="2020-05-30T16:58:04" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Available Trips" timestamp="2020-05-30T16:58:04" tests="7" failures="1" time="19.413">
+    <testcase name="Trips Available Trips Set an current position for Available Trips[Location]" time="19.413" classname="Set an current position for Available Trips[Location]">
+    </testcase>
+    <testcase name="Trips Available Trips Select a trip [Using Side Menu]" time="0" classname="Select a trip [Using Side Menu]">
+      <failure message="Timed out retrying: Expected to find content: &apos;54 avenue Benoît Malon 93190 Livry-Gargan&apos; within the element: [ &lt;span&gt;, 261 more... ] but never did." type="AssertionError"><![CDATA[AssertionError: Timed out retrying: Expected to find content: '54 avenue Benoît Malon 93190 Livry-Gargan' within the element: [ <span>, 261 more... ] but never did.
+    at Context.eval (http://localhost:3000/__cypress/tests?p=cypress/integration/features/Trips.spec.js:234:22)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Trips List" timestamp="2020-05-30T16:58:36" tests="5" failures="0" time="0">
+  </testsuite>
+</testsuites>

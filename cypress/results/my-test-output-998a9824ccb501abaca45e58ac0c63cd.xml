@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0" tests="8" failures="0" skipped="8">
+  <testsuite name="Root Suite" timestamp="2020-05-30T16:57:23" tests="0" file="cypress/integration/features/Fleet.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Fleet" timestamp="2020-05-30T16:57:23" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Fleet List" timestamp="2020-05-30T16:57:23" tests="4" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Fleet Registration" timestamp="2020-05-30T16:57:37" tests="4" failures="0" time="0">
+  </testsuite>
+</testsuites>
