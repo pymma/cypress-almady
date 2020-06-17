@@ -8,11 +8,6 @@ context('Authentification', () => {
         before(function(){
             LoginPage.load()
             BasePage.pause(1000)
-            //LoginPage.createAccout()
-            //BasePage.pause(1000)
-            //LoginPage.logout()
-            //BasePage.pause(1000)
-            //cy.reload()
         })
 
         after(function(){

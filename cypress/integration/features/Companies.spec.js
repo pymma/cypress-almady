@@ -6,13 +6,15 @@ context('Companies', () => {
 
     describe('Companies List',() => {
         before(function(){
+
             LoginPage.load()
-            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.Screenshot()
+            //LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
         })
 
         after(function(){
-            BasePage.pause(700)
-            LoginPage.logout()
+            //BasePage.pause(700)
+            //LoginPage.logout()
         })
 
     

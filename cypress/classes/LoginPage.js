@@ -25,6 +25,7 @@ export default class LoginPage{
     static login(username,password){
         cy.get('#username').type(username)
         cy.get('#password').type(password)
+        BasePage.Screenshot()
         cy.get('button.btn.btn-outline-info').contains('Sign in').click()
         BasePage.pause(1000)
     }
@@ -32,8 +33,10 @@ export default class LoginPage{
 
     /*logout from the current log account*/
     static logout(){
-        cy.get('svg.hover-pointer-brighter').click()
-        cy.get('h3').should('contain','Sign in')
+        cy.get('#dropdown-basic').click()
+        cy.get('a').contains('Logout').click()
+        cy.get('h3').contains('Sign in').should('be.visible')
+        //BasePage.Screenshot()
     }
 
     /*Delete the current log account*/
@@ -41,5 +44,28 @@ export default class LoginPage{
 
     /*Create an account for a user*/
     static createAccout(){}
+
+    /*generate a random number*/
+    static Generate_Number(nb_chiffre){
+        let nombre = ''
+        for (let index = 0; index < nb_chiffre; index++) {
+            let chiffre = Math.floor(Math.random() * 10)
+            nombre = nombre + chiffre 
+        }
+        return nombre
+    }
+
+    /*create a driver account from login page based on phone numer*/
+    static CreateConfirmDriver(driveNumber){
+        cy.get('button.btn.btn-primary').contains('Subscribe').click()
+        BasePage.pause(1000)
+        cy.get('[placeholder="Enter Your Phone Country Code"]').type("+33")
+        cy.get('[placeholder="Enter Your Number Phone"]').type(driveNumber)
+        BasePage.pause(1000)
+        cy.get('button.btn.btn-primary').contains('Next').click()
+        BasePage.pause(1000)
+        cy.get('[placeholder="Enter Your Verification Code"]').type(driveNumber)
+        cy.get('button.btn.btn-primary').contains('Next').click()
+}
 
 }

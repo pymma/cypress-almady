@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="8.664000000000001" tests="3" failures="0" skipped="1">
+  <testsuite name="Root Suite" timestamp="2020-06-08T15:03:00" tests="0" file="cypress/integration/authentification/Log.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Authentification" timestamp="2020-06-08T15:03:00" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Log" timestamp="2020-06-08T15:03:00" tests="3" failures="0" time="8.664000000000001">
+    <testcase name="Authentification Log Login" time="8.412" classname="Login">
+    </testcase>
+    <testcase name="Authentification Log Logout" time="0.252" classname="Logout">
+    </testcase>
+  </testsuite>
+</testsuites>

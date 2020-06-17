@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run:dev": "cypress run --env DEPLOYMENT_ENV=dev",
+
+    "cy:run:dev": "cypress run --env DEPLOYMENT_ENV=dev SCREENSHOT=true --spec 'cypress/integration/features/test.spec.js'",
+
+
     "cy:run:chrome:dev": "cypress run --browser chrome --env DEPLOYMENT_ENV=dev",
     "cy:run:firefox:dev": "cypress run --browser firefox --env DEPLOYMENT_ENV=dev",
     "cy:run:electron:dev": "cypress run --browser electron --env DEPLOYMENT_ENV=dev",
