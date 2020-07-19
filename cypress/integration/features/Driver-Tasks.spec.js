@@ -102,15 +102,18 @@ context('Driver', () => {
         })
 
         it('Transport Box Completion',() => {
-            cy.get('#containerType').select("Container")
-            cy.get("#productType").select("hot")
+            cy.get('#allTruckType').select("fragile")
+            cy.get("#box").select("fragile")
             cy.get("button.btn.btn-primary.btn-sm").contains('Add').click()
         })
 
+        it('Check the Terms & Conditions', () => {
+            cy.get('label[for="acceptTermsAndConditions"]').click()
+        })
+        
         it('Submit the Register',() => {
             BasePage.pause(1000)
             cy.get("button.btn.btn-primary.btn-lg").contains("Register Driver").click()
-            BasePage.pause(10000)
         })
 
         it('Driver Registration should be visible in the tasks section', () => {
@@ -119,6 +122,10 @@ context('Driver', () => {
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             BasePage.Sidebar()
             BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('input.form-control').type(prenom)
+            BasePage.pause(1000)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1000)
             cy.get('td').contains(prenom).should('be.visible')
             cy.get('td').contains(nom).should('be.visible')
             cy.get('td').contains('Verify Driver data before final validation').should('be.visible')
@@ -142,14 +149,16 @@ context('Tasks', () => {
         })
 
 
-        
         //Les comptes des drivers à validé
         it(`Verify the driver ${prenom} ${nom} is visible and not processed`,() => {
+            cy.get('input.form-control').type(prenom)
+            BasePage.pause(1000)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1000)
             cy.get('td').contains(prenom).should('be.visible')
             cy.get('td').contains(nom).should('be.visible')
             cy.get('td').contains('Verify Driver data before final validation').should('be.visible')
             LoginPage.logout()
-            //Ready non vérifié pour le moment
         })
 
         it('Verify the Data from the precedent driver',() => {
@@ -160,6 +169,10 @@ context('Tasks', () => {
             BasePage.pause(1000)
             BasePage.Sidebar()
             BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('input.form-control').type(prenom)
+            BasePage.pause(1000)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1000)
             cy.get('td').contains(prenom).next().contains(nom).click()
             BasePage.pause(500)
             //Contact
@@ -191,10 +204,6 @@ context('Tasks', () => {
             cy.get('[name="truckBrand"]').should('have.value',brand)
             cy.get('[name="truckModel"]').should('have.value',Model)
             cy.get('#transportType').should('have.value','VMTruck') //correspond à Medium truck
-            //transport Box
-            cy.get('#containerType').should("have.value","box")
-            cy.get("#productType").should("have.value","HOT")
-            cy.get('input.col-md-12').should("have.value","1")
         })
 
         it('Claim The Task',() => {
@@ -206,6 +215,10 @@ context('Tasks', () => {
             BasePage.pause(1000)
             BasePage.Sidebar()
             BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('input.form-control').type(prenom)
+            BasePage.pause(1000)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1000)
             cy.get('td').contains(prenom).click()
             BasePage.pause(1000)
             cy.get('button.btn.btn-primary.btn-lg').contains("Claim Task").click()
@@ -228,6 +241,10 @@ context('Tasks', () => {
             BasePage.pause(1000)
             BasePage.Sidebar()
             BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('input.form-control').type(prenom)
+            BasePage.pause(1000)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1000)
             cy.get('td').contains(prenom).click()
             BasePage.pause(1000)
             cy.get('button').contains('Start the task').click()
@@ -248,6 +265,10 @@ context('Tasks', () => {
             BasePage.pause(1000)
             BasePage.Sidebar()
             BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('input.form-control').type(prenom)
+            BasePage.pause(1000)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1000)
             cy.get('td').contains(prenom).click()
             BasePage.pause(1000)
             cy.get('button').contains('Stop the task').click()
@@ -270,6 +291,10 @@ context('Tasks', () => {
             BasePage.pause(1000)
             BasePage.Sidebar()
             BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('input.form-control').type(prenom)
+            BasePage.pause(1000)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1000)
             cy.get('td').contains(prenom).click()
             BasePage.pause(1000)
             cy.get('button').contains('Start the task').click()
@@ -278,13 +303,33 @@ context('Tasks', () => {
             BasePage.pause(1500)
             cy.get('button.save-button.btn.btn-success.btn-lg').contains('Save profile').click()
             BasePage.pause(3000)
+            cy.reload()
+            BasePage.pause(1000)
+        })
+
+        it.skip('Driver Change Password after The Admin Validation',() => {
+            /*LoginPage.load()
+            LoginPage.login(cell_phone_number,cell_phone_number)
+            BasePage.pause(1000)
+            /*cy.get('input[name="newPassword"]').type(DRIVER_DEFAULT_PASSWORD)
+            cy.get('input[name="repeatNewPassword"]').type(DRIVER_DEFAULT_PASSWORD)
+            cy.get('button.btn.btn-primary').contains("Submit").click()*/
+        })
+
+        it.skip('Connect The New Driver after All Steps And Verify General Information', () => {
+            BasePage.pause(1000)
+            LoginPage.load()
+            BasePage.pause(1000)
+            LoginPage.login(cell_phone_number,DRIVER_DEFAULT_PASSWORD)
+            BasePage.pause(1000)
+            cy.get('h3.card-header').contains('General Information').should('be.visible')
         })
 
     })
 
 })
 
-context('Registration Verification', () => {
+context.skip('Registration Verification', () => {
 
     describe('Registration Verification[As Driver]',() => {
          
@@ -309,7 +354,6 @@ context('Registration Verification', () => {
         it('Connect The New Driver after All Steps And Verify General Information', () => {
             BasePage.pause(1000)
             LoginPage.load()
-            cy.reload()
             BasePage.pause(1000)
             LoginPage.login(cell_phone_number,DRIVER_DEFAULT_PASSWORD)
             BasePage.pause(1000)
@@ -324,13 +368,7 @@ context('Registration Verification', () => {
 //-------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-/*
-
-context('Driver', () => {
+context.skip('Driver', () => {
 
     describe('Register a Driver[As Admin]',() => {
 
@@ -351,7 +389,7 @@ context('Driver', () => {
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             BasePage.pause(1000)
             BasePage.Sidebar()
-            BasePage.FromSidebarClick("Register driver")
+            BasePage.FromSidebarClick("Driver","Register driver")
         })
 
         after(function(){
@@ -380,17 +418,13 @@ context('Driver', () => {
             cy.get('#rcCopyDocument').click()
             cy.get('#panCardDocument').click() 
             //Select Document
-            cy.upload_file('#idCard', 'id-card.png')
-            cy.upload_file('#drivingLicenseDocument', 'driver-licence.jpg')
-            cy.upload_file('#insuranceDocument', 'insurance.jpeg')
-            cy.upload_file('#residenceDocument', 'resident.jpg')
-            cy.upload_file('#pollutionControlDoc', 'pollution-control.png')
-            cy.upload_file('#rcCopyDocument', 'RRCopy.png')
-            cy.upload_file('#panCardDocument', 'pan-card.jpg')
-        })
-
-        it.skip('Select Vendor',() => {
-            //TODO//
+            cy.upload_file('#idCard', 'img.jpeg')
+            cy.upload_file('#drivingLicenseDocument', 'img.jpeg')
+            cy.upload_file('#insuranceDocument', 'img.jpeg')
+            cy.upload_file('#residenceDocument', 'img.jpeg')
+            cy.upload_file('#pollutionControlDoc', 'img.jpeg')
+            cy.upload_file('#rcCopyDocument', 'img.jpeg')
+            cy.upload_file('#panCardDocument', 'img.jpeg')
         })
 
         it('Vehicule Information Completion',() => {
@@ -441,7 +475,7 @@ context('Driver', () => {
 
         
         it('Submit the Register',() => {
-            BasePage.pause(1000)
+            BasePage.pause(2000)
             cy.get("button.btn.btn-primary.btn-lg").contains("Register Driver").click()
             BasePage.pause(4000)
         })
@@ -451,15 +485,15 @@ context('Driver', () => {
             LoginPage.load()
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             BasePage.Sidebar()
-            BasePage.FromSidebarClick('Tasks')
+            BasePage.FromSidebarClick('Task','Tasks')
             cy.get('td').contains(prenom).next().contains(nom).should('be.visible')
             cy.get('td').contains('Verify Driver data before final validation').should('be.visible')
         })
     })
 
-})// A supprimer avec le temps*/
-/*
-    describe('Register Location',() => {
+
+
+    describe.skip('Register Location',() => {
         before(function(){
             LoginPage.load()
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
@@ -492,30 +526,45 @@ context('Driver', () => {
     })
 
     describe('Driver List',() => {
+        let email = 'eokeefe@oreilly.com'
+        let firstN  = 'Amanda'
+        let LastN = 'Blake'
+        let Add = 'Rue des Arcades Fleuries 77500 Chelles'
+        let pvJob = 'jobless'
+        let new_job = "Zoologist"
+
         before(function(){
             LoginPage.load()
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             BasePage.Sidebar()
-            BasePage.FromSidebarClick("Drivers list")
-            BasePage.CloseSideBar()
+            BasePage.FromSidebarClick("Driver","Drivers list")
         })
 
-        it('Select a Driver[Owen Mathis]',() => {
-            cy.get('td').contains('botsford.reynold@breitenberg.com').click()
+        it('Select a Driver[Amanda Blake]',() => {
+            cy.get('select[name="choose"]').select('First Name')
+            cy.get('input[name="search"]').clear().type(firstN)
+            cy.get('#inputGroupPrepend').click()
+            cy.get('td').contains(email).click()
             BasePage.pause(1000)
             cy.get('h3').contains('General Information').should('be.visible')
             
         })
 
         it('Check a Driver Information',() => {
-            cy.get('div').contains('Mathis').should('be.visible')
-            cy.get('div').contains('Owen').should('be.visible')
-            cy.get('div').contains('16 rue Pierre Geofroix 92700 Colombes').should('be.visible')
-            cy.get('div').contains('jobless').should('be.visible')
-            cy.get('div').contains('botsford.reynold@breitenberg.com').should('be.visible')
+            cy.get('div').contains(firstN).should('be.visible')
+            cy.get('div').contains(LastN).should('be.visible')
+            cy.get('div').contains(Add).should('be.visible')
+            cy.get('div').contains(pvJob).should('be.visible')
+            cy.get('div').contains(email).should('be.visible')
         })
 
         it('Change Vehicule Information',() => {
+            cy.reload()
+            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick("Driver","Drivers list")
+            cy.get('td').contains(email).click()
+            BasePage.pause(1000)
             cy.get('button.btn.btn-primary').contains('Change data').click()
             BasePage.pause(1000)
             cy.get('[name="truckBrand"]').clear().type("Lamborghini")
@@ -529,10 +578,15 @@ context('Driver', () => {
 
 
         it('Change a Driver Information',() => {
-            let new_job = "Zoologist"
+            cy.reload()
+            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick("Driver","Drivers list")
+            cy.get('td').contains(email).click()
+            BasePage.pause(1000)
             cy.get('button.btn.btn-secondary.btn-lg').contains('Change data').click()
             BasePage.pause(1000)
-            cy.get('[name="currentPrevJob"]').should('have.value','jobless')
+            cy.get('[name="currentPrevJob"]').should('have.value',pvJob)
             cy.get('[name="currentPrevJob"]').clear().type(new_job)
             BasePage.pause(500)
             cy.get('button.btn.btn-primary.btn-lg').contains('Save Change').click()
@@ -541,26 +595,276 @@ context('Driver', () => {
         })
 
         it('Reset Default previous job', () => {
+            cy.reload()
+            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick("Driver","Drivers list")
+            cy.get('td').contains(email).click()
+            BasePage.pause(1000)
             cy.get('button.btn.btn-secondary.btn-lg').contains('Change data').click()
             BasePage.pause(1000)
-            cy.get('[name="currentPrevJob"]').clear().type('jobless')
+            cy.get('[name="currentPrevJob"]').clear().type(pvJob)
             BasePage.pause(500)
             cy.get('button.btn.btn-primary.btn-lg').contains('Save Change').click()
-            
+            BasePage.pause(2000)
         })
     
         it('Disable a Driver',() => {
-            cy.get('button.btn.btn-outline-danger.btn-lg').contains('Disable driver').click()
             LoginPage.load()
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             BasePage.Sidebar()
-            BasePage.FromSidebarClick("Drivers list")
-            BasePage.CloseSideBar()
-            cy.get('td').contains("admin@almady.com").should('be.visible')
-            cy.get('td').contains('botsford.reynold@breitenberg.com').click()
-            cy.get('button.btn.btn-outline-success.btn-lg').contains('Enable driver').click()
+            BasePage.FromSidebarClick("Driver","Drivers list")
+            cy.get('td').contains(email).click()
+            BasePage.pause(1000)
+            cy.get('button.btn.btn-outline-danger.btn-lg').contains('Disable driver').click()
+            LoginPage.load()
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick("Driver","Drivers list")
+            cy.get('td').contains(email).click()
+            cy.get('button.btn.btn-outline-success.btn-lg').contains('Enable driver').should('be.visible').click()
         })
 
     })
 
-})*/
+})
+
+//--------------------------------------------------------------------------------------------------------------------------
+
+
+context.skip('Driver - Fleet', () => {
+
+
+    let fleet = 'fleet-vendor4@vendor-4.com'
+    let fleet_password = '588633882115'
+
+    describe('Register a Driver[Linked to a Fleet]',() => {
+
+
+        let cell_phone_number = LoginPage.Generate_Number(10)
+        let pren = FirstName[Math.floor(Math.random() * FirstName.length)]
+        let prenom = pren + '-' + LoginPage.Generate_Number(4)
+        let nom = LastName[Math.floor(Math.random() * LastName.length)]
+        let email = pren.toLocaleLowerCase() + '.' + nom.toLocaleLowerCase() + email_tail[Math.floor(Math.random() * email_tail.length)]
+        let job = Jobs[Math.floor(Math.random() * Jobs.length)] 
+        let addr = Adresses[Math.floor(Math.random() * Adresses.length)]
+        let truck_regis = LoginPage.Generate_Number(6)
+        let brand = Truck_Brandz[Math.floor(Math.random() * Truck_Brandz.length)]
+        let Model = Truck_Models[Math.floor(Math.random() * Truck_Models.length)]
+
+        before(function(){
+            LoginPage.load()
+            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.pause(1000)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick("Driver","Register driver")
+        })
+
+        after(function(){
+            BasePage.pause(700)
+            //LoginPage.logout()
+        })
+
+        it(`Choose a Fleet[${fleet}]`,() => {
+            cy.get('button').contains('Choose a fleet').click()
+            //BasePage.pause(1000)
+            cy.get('td').contains(fleet).click()
+            //BasePage.pause(1000)
+        })
+
+        it('Personal Information Completion',() => {
+            //Personal Information
+            cy.get('[name="firstName"]').clear().type(prenom)
+            cy.get('[name="lastName"]').clear().type(nom)
+            cy.get('[name="phoneCountryCode"]').clear().type('+33')
+            cy.get('[name="mobileNumber"]').clear().type(cell_phone_number)
+            cy.get('[name="email"]').clear().type(email)
+            cy.get('[name="currentPrevJob"]').clear().type(job)
+            cy.get('[name="completeAddress"]').clear().type(addr)
+        })
+
+
+        it('Vehicule Information Completion',() => {
+            //Vehicule Information
+            cy.get('[name="truckRegistrationNumber"]').clear().type(truck_regis)
+            cy.get('[name="truckBrand"]').clear().type(brand)
+            cy.get('[name="truckModel"]').clear().type(Model)
+            cy.get('#transportType').select('Small vehicle')
+            
+        })
+
+        it('Transport Box Completion',() => {
+            //transport Box
+            cy.get('#containerType').select("Entire vehicle")
+            cy.get("#productType").select("COLD")
+            cy.get("button.btn.btn-primary.btn-sm").contains('Add').click()
+        })
+        
+        it('Add Documents',() => {
+            //unselect current Document
+            cy.get('#idCard').click()
+            cy.get('#drivingLicenseDocument').click()
+            cy.get('#insuranceDocument').click()
+            cy.get('#residenceDocument').click()
+            cy.get('#pollutionControlDoc').click()
+            cy.get('#rcCopyDocument').click()
+            cy.get('#panCardDocument').click() 
+            //Select Document
+            cy.upload_file('#idCard', 'img.jpeg')
+            cy.upload_file('#drivingLicenseDocument', 'img.jpeg')
+            cy.upload_file('#insuranceDocument', 'img.jpeg')
+            cy.upload_file('#residenceDocument', 'img.jpeg')
+            cy.upload_file('#pollutionControlDoc', 'img.jpeg')
+            cy.upload_file('#rcCopyDocument', 'img.jpeg')
+            cy.upload_file('#panCardDocument', 'img.jpeg')
+        })
+
+
+        it('Fill The Planning', () => {// MARDI 8h - 20h00 
+            cy.get('#day').select('Tuesday')
+            cy.get('#start').type('08:00')
+            cy.get('#end').type('20:00')
+            BasePage.pause(500)
+            cy.get("button.btn.btn-primary.btn-sm").contains("add").click()
+            BasePage.pause(500)
+            cy.get('td.delete-part-row').contains('08:00 - 20:00').should('be.visible')
+        
+            //JEUDI 15h - 22h00
+            cy.get('#day').select('Thursday')
+            BasePage.pause(500)
+            cy.get('#start').type('15:00')
+            cy.get('#end').type('22:00')
+            BasePage.pause(500)
+            cy.get("button.btn.btn-primary.btn-sm").contains("add").click()
+            BasePage.pause(500)
+            cy.get('td.delete-part-row').contains('15:00 - 22:00').should('be.visible')
+            
+            //SAMEDI 9h30 - 20H30
+            cy.get('#day').select('Saturday')
+            BasePage.pause(500)
+            cy.get('#start').type('09:30')
+            cy.get('#end').type('20:30')
+            BasePage.pause(500)
+            cy.get("button.btn.btn-primary.btn-sm").contains("add").click()
+            BasePage.pause(500)
+            cy.get('td.delete-part-row').contains('09:30 - 20:30').should('be.visible')
+            })
+
+        
+        it('Submit the Register',() => {
+            BasePage.pause(2000)
+            cy.get("button.btn.btn-primary.btn-lg").contains("Register Driver").click()
+            BasePage.pause(4000)
+        })
+
+        it('Validate The Task & Save Profile',() => {
+            LoginPage.load()
+            cy.reload()
+            BasePage.pause(1000)
+            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.pause(1000)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('td').contains(prenom).click()
+            BasePage.pause(1000)
+            cy.get('button').contains('Start the task').click()
+            BasePage.pause(1000)
+            cy.get('button').contains('Validation').click()
+            BasePage.pause(1500)
+            cy.get('button.save-button.btn.btn-success.btn-lg').contains('Save profile').click()
+            BasePage.pause(3000)
+        })
+
+        it('Driver Registration should be visible in the Driver section[In Fleet Account]', () => {
+            BasePage.pause(1000)
+            LoginPage.load()
+            LoginPage.login(fleet,fleet_password)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick('Driver','Driver list')
+            cy.get('input[name="search"]').clear().type(prenom)
+            cy.get('#inputGroupPrepend').click()
+            BasePage.pause(1500)
+            cy.get('td').contains(prenom).next().contains(nom).should('be.visible')
+        })
+    })
+
+
+    describe.skip('Register a driver[as Fleet admin]',() => {
+        let cell_phone_number = LoginPage.Generate_Number(10)
+        let pren = FirstName[Math.floor(Math.random() * FirstName.length)]
+        let prenom = pren + '-' + LoginPage.Generate_Number(4)
+        let nom = LastName[Math.floor(Math.random() * LastName.length)]
+        let email = pren.toLocaleLowerCase() + '.' + nom.toLocaleLowerCase() + email_tail[Math.floor(Math.random() * email_tail.length)]
+        let job = Jobs[Math.floor(Math.random() * Jobs.length)] 
+        let addr = Adresses[Math.floor(Math.random() * Adresses.length)]
+        let truck_regis = LoginPage.Generate_Number(6)
+        let brand = Truck_Brandz[Math.floor(Math.random() * Truck_Brandz.length)]
+        let Model = Truck_Models[Math.floor(Math.random() * Truck_Models.length)]
+
+        before(function(){
+            LoginPage.load()
+            LoginPage.login(fleet,fleet_password)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick("Driver","Register driver")
+        })
+
+        after(function(){
+            BasePage.pause(500)
+            LoginPage.logout()
+        })
+
+        it(`Choose a Fleet[${fleet}]`,() => {
+            cy.get('button').contains('Choose a fleet').click()
+            BasePage.pause(1000)
+            cy.get('td').contains(fleet).click()
+            BasePage.pause(1000)
+        })
+
+        it('Personal Information Completion',() => {
+            //Personal Information
+            cy.get('[name="firstName"]').clear().type(prenom)
+            cy.get('[name="lastName"]').clear().type(nom)
+            cy.get('[name="phoneCountryCode"]').clear().type('+33')
+            cy.get('[name="mobileNumber"]').clear().type(cell_phone_number)
+            cy.get('[name="email"]').clear().type(email)
+            cy.get('[name="currentPrevJob"]').clear().type(job)
+            cy.get('[name="completeAddress"]').clear().type(addr)
+        })
+
+        it('Vehicule Information Completion',() => {
+            //Vehicule Information
+            cy.get('[name="truckRegistrationNumber"]').clear().type(truck_regis)
+            cy.get('[name="truckBrand"]').clear().type(brand)
+            cy.get('[name="truckModel"]').clear().type(Model)
+            cy.get('#transportType').select('Small vehicle')
+            
+        })
+
+        it('Transport Box Completion',() => {
+            //transport Box
+            cy.get('#containerType').select("Entire vehicle")
+            cy.get("#productType").select("COLD")
+            cy.get("button.btn.btn-primary.btn-sm").contains('Add').click()
+        })
+
+        
+        it('Submit the Register',() => {
+            BasePage.pause(2000)
+            cy.get("button.btn.btn-primary.btn-lg").contains("Register Driver").click()
+            BasePage.pause(4000)
+        })
+
+        it(`${prenom} ${nom} should be visible in Task section[Fleet account & Admin Account]`, () => {
+            cy.get('td').contains(prenom).should('be.visible')
+            LoginPage.logout()
+            cy.reload()
+            BasePage.pause(1000)
+            LoginPage(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.Sidebar()
+            BasePage.FromSidebarClick('Task','Tasks')
+            cy.get('td').contains(prenom).should('be.visible')
+        })
+
+    
+    })
+
+})

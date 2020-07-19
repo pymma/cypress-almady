@@ -29,7 +29,6 @@ export default class BasePage {
     static FromSidebarClick(option_name,expr){
         cy.get('div').contains(option_name).click()
         BasePage.pause(1000)
-        
         switch (expr) {
             case 'Companies list':
                 cy.get(':nth-child(1) > [style="background-color: gray;"] > a > .hover-pointer-darker > div').click()
@@ -45,6 +44,10 @@ export default class BasePage {
 
             case 'Drivers list':
                 cy.get('[href="/drivers"] > .hover-pointer-darker > div').click()
+                break;
+
+            case 'Shipments List':
+                cy.get(':nth-child(5) > [style="background-color: gray;"] > a > .hover-pointer-darker > div').click()
                 break;
 
             case 'E-commerces list':
@@ -64,15 +67,16 @@ export default class BasePage {
                 break;
 
             case 'Tasks':
-                cy.get(':nth-child(5) > [style="background-color: gray;"] > a > .hover-pointer-darker').click()
+                cy.get(':nth-child(6) > [style="background-color: gray;"] > a > .hover-pointer-darker > div').click()
+                //cy.get('a[href="/tasks"]').click()
                 break;
 
             case 'Available Trips':
                 cy.get('[href="/trips"] > .hover-pointer-darker').click()
                 break;
      
-            case 'Trips list':
-                cy.get('[href="/trip/list"] > .hover-pointer-darker').click()
+            case 'Trip list':
+                cy.get('[href="/trips_list"] > .hover-pointer-darker > div').click()
                 break;
 
             case 'Users list':
@@ -93,7 +97,6 @@ export default class BasePage {
 
             default: break;
           }
-        
         BasePage.pause(3500)
         cy.get('div').contains(option_name).click()
         BasePage.CloseSideBar()

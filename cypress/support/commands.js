@@ -36,3 +36,7 @@ Cypress.Commands.add('upload_file', (selector, fileUrl, type = '') => {
         return cy.get(selector).trigger('drop', event)
       })
   });
+/*
+Cypress.Commands.add("txt", { prevSubject: true}, (subject, options) => {
+  return subject.text();
+});*/

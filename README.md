@@ -41,3 +41,26 @@ les builds sont paramétrables dans la section Configurer après avoir crée un 
 
 
 ###Obtention des Résultats des tests[After Built]
+  - configuration : pour l'obtention des résulats de tests dans jenkins sous forme de rapport
+    *Coté Cypress*
+    + dans le fichier cypress.json ajouter le code en dessous
+      *"reporter": "junit",
+      "reporterOptions": {
+        "mochaFile": "cypress/results/my-test-output-[hash].xml",
+        "toConsole": false
+        }*
+    + intaller les dépendances suivante : 
+    *Coté Jenkins*
+###Mise En Place des ScreenShots et Videos avec cypress
+
+1- Mise en place des screenShots :
+   - Les screenShots peuvent etre insérer dans le code n'importe où en utilisant la fonction static BasePage.Screenshot(NAME), avec NAME désignant le nom de screen
+   - Pour disposer de la fonction de screenShots il faut mettre l'attribut *'SCREEN'* à *true*(qui est par défault à false),
+     dans le fichier de configuration 'config.js' qui se situe dans le répertoire 'classes'
+   - Les screenshots pourront être retrouvés dans le répertoire *'screenShots'*
+
+2- Mise en place des videos[Attention les videos ne sont disponible que si il s'agit d'un execution à partir du terminal Ex:*cy:run*] :
+   - Pour disposer de la fonction du recording il faut mettre l'attribut *'video'* à *true*(qui est par défault à false),
+     dans le fichier de configuration *'cypress.json'*
+   - Les videos sont record sous un format compressé ne garantissant pas une résolution optimale de la video(la fonction de compression peut être désactivé)
+   - Les vidéos pourront être retrouvés dans le répertoire *'videos'*

@@ -34,7 +34,9 @@ export default class LoginPage{
     /*logout from the current log account*/
     static logout(){
         cy.get('#dropdown-basic').click()
+        BasePage.pause(1000)
         cy.get('a').contains('Logout').click()
+        BasePage.pause(1000)
         cy.get('h3').contains('Sign in').should('be.visible')
         //BasePage.Screenshot()
     }
