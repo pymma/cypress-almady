@@ -11,9 +11,16 @@ context("Fleet", () => {
     let info = {};
 
     LoginPage.load();
-    LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
+    LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD);
+   
     BasePage.Sidebar();
-    BasePage.FromSidebarClick("Trip", "Available Trips");
+    BasePage.FromSidebarClick("Shipment", "Shipments List");
   });
 
 });
+
+
+// Change default warehouse [dont work]
+// shipment|(order) filter in vendor/e-commerce admin[By date]
+// driver creation 
+//Profil fleet dont work

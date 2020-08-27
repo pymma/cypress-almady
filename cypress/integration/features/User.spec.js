@@ -2,6 +2,7 @@ import BasePage from "../../classes/BasePage";
 import LoginPage from "../../classes/LoginPage";
 import { LOGIN_USERNAME, LOGIN_PASSWORD } from "../../classes/config";
 
+//verified the 08/20/2020
 context("User", () => {
   //fonctionnne
   describe("User List", () => {
@@ -25,20 +26,16 @@ context("User", () => {
         const email = $td.text();
         cy.get(`tbody > :nth-child(${i}) > :nth-child(3)`).then(($td) => {
           const user_type = $td.text();
-          cy.get('input[name="search"]').type(email);
-          cy.get("#inputGroupPrepend").click();
-          BasePage.pause(1000);
-          cy.get("td").contains(email).click();
+          BasePage.SearchByEmail(email)
+          cy.get(":nth-child(1) > .hover-pointer > svg").click();
+          //cy.get(".hover-pointer > svg").click();
           BasePage.pause(1000);
           cy.get("div").contains(`Email: ${email}`).should("be.visible");
-          cy.get("div")
-            .contains(`User Type: ${user_type}`)
-            .should("be.visible");
           /////
           cy.log("Filter test");
           BasePage.Sidebar();
           BasePage.FromSidebarClick("User", "Users list");
-          cy.get('input[name="search"]').type(email);
+          BasePage.SearchByEmail(email)
           cy.get("td").contains(email).should("be.visible");
           BasePage.pause(1000);
         });
@@ -86,7 +83,10 @@ context("User", () => {
       cy.log("Choose a Company among those proposed");
       BasePage.Sidebar();
       BasePage.FromSidebarClick("User", "Create user");
-      cy.get("td").contains(comp).should("be.visible").click();
+      BasePage.SearchByName(comp)
+      BasePage.pause(1000);
+      cy.get("td").contains(comp).should("be.visible");
+      cy.get(".hover-pointer > svg").click();
       BasePage.pause(500);
       ////
       cy.log("Choose User Groups");
@@ -115,9 +115,7 @@ context("User", () => {
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
       BasePage.Sidebar();
       BasePage.FromSidebarClick("User", "Users list");
-      cy.get('input[name="search"]').type(email);
-      cy.get("#inputGroupPrepend").click();
-      BasePage.pause(1000);
+      BasePage.SearchByEmail(email)
       cy.get("td").contains(email).should("be.visible");
     });
   });

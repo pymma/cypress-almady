@@ -85,111 +85,128 @@ let phone = LoginPage.Generate_Number(10);
 let email = frstnm + "@" + entreprise.toLocaleLowerCase() + ".com";
 let regis = LoginPage.Generate_Number(7);
 
+//verified 08/20/2020
 context("Fleet", () => {
-  let nom = "fleet-0-name";
-  let ema = "fleet@fleet0.com";
-
-  let mobile = "11110";
-  let ph = "+966";
-  let regis = "4554540";
   //fonctionne
   describe("Fleet List", () => {
-    before(function () {
+    beforeEach(() => {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
       BasePage.Sidebar();
       BasePage.FromSidebarClick("Fleet", "Fleets list");
     });
 
-    it("Click on a Fleet implies information Visualisation", () => {
-      BasePage.Screenshot("Visualisation-Fleet-Information-0");
-      cy.get("td").contains(nom).should("be.visible").click();
-      BasePage.pause(1000);
-      cy.get("h3").contains("Fleet Information").should("be.visible");
-      cy.get("div.list-group-item")
-        .contains(`Fleet name: ${nom}`)
-        .should("be.visible");
-      cy.get("div.list-group-item")
-        .contains(`Company name: ${nom}`)
-        .should("be.visible");
-      cy.get("div.list-group-item")
-        .contains(`Email: ${ema}`)
-        .should("be.visible");
-      cy.get("div.list-group-item")
-        .contains(`Phone country code: ${ph}`)
-        .should("be.visible");
-      cy.get("div.list-group-item")
-        .contains(`Mobile: ${mobile}`)
-        .should("be.visible");
-      cy.get("div.list-group-item")
-        .contains(`Mobile number: ${mobile}`)
-        .should("be.visible");
-      cy.get("div.list-group-item")
-        .contains(`Registration Certificate: ${regis}`)
-        .should("be.visible");
-      BasePage.Screenshot("Visualisation-Fleet-Information-1");
-    });
+    it("Click on a Fleet implies information Visualisation | Select a group implies group tab visualisation | Update Fleet Information", () => {
+      let alea2 = Math.floor(Math.random() * 5) + 1;
 
-    it("Select a group implies group tab visualisation", () => {
-      BasePage.pause(1000);
-      let opt1 = "LePlaisirDeConcretiserVosProjetsPlusRapidement.com_admin";
+      cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
+        let queue = "_fleet";
+        const nom = $td.text().trim();
+        const comp_nom = nom.substring(0, nom.length - queue.length);
 
-      cy.get("#groups").select(opt1);
-      cy.get("option").contains(opt1).should("be.visible");
-    });
+        cy.get(`tbody > :nth-child(${alea2}) > :nth-child(2)`).then(($td) => {
+          const ema = $td.text().trim();
 
-    it("Update Fleet Information", () => {
-      LoginPage.load();
-      LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
-      BasePage.Sidebar();
-      BasePage.FromSidebarClick("Fleet", "Fleets list");
-      cy.get("td").contains(nom).click();
+          BasePage.SearchByName(nom);
+          BasePage.getEye();
 
-      BasePage.Screenshot("Update-Fleet-Information-0");
-      let nouveau = LoginPage.Generate_Number(7);
-      BasePage.pause(1000);
-      cy.get("button").contains("Update fleet").click();
-      BasePage.pause(1000);
-      cy.get("#registrationCertificate").clear().type(nouveau);
-      cy.get("button").contains("Update fleet").click();
-      BasePage.Screenshot("Update-Fleet-Information-0");
+          cy.get(
+            `:nth-child(1) > :nth-child(1) > .card > .card-body > :nth-child(1) > :nth-child(1) > .list-group > .list-group-item`
+          ).then(($td) => {
+            let tete = "Registration Certificate:";
+            const regis = $td.text().trim().substring(tete.length).trim();
+
+            cy.get("h3").contains("Fleet Information").should("be.visible");
+            cy.get("div.list-group-item")
+              .contains(`Fleet name: ${nom}`)
+              .should("be.visible");
+            cy.get("div.list-group-item")
+              .contains(`Company name: ${comp_nom}`)
+              .should("be.visible");
+            cy.get("div.list-group-item")
+              .contains(`Email: ${ema}`)
+              .should("be.visible");
+            cy.get("div.list-group-item")
+              .contains(`Registration Certificate: ${regis}`)
+              .should("be.visible");
+
+            /////
+            cy.log("SELECT A GROUP IMPLIES VISUALISATION");
+
+            let opt1 = `${comp_nom}_admin`;
+            cy.get("#groups").select(opt1);
+            cy.get("option").contains(opt1).should("be.visible");
+
+            ////
+            cy.log("UPDATE FLEET INFORMATION");
+
+            let nouveau = LoginPage.Generate_Number(7);
+            BasePage.pause(1000);
+            cy.get("button").contains("Update fleet").click();
+            BasePage.pause(1000);
+            cy.get("#phoneNumber").clear().type(nouveau);
+            cy.get("button").contains("Save change").click();
+            BasePage.pause(3000);
+            BasePage.SearchByName(nom);
+            BasePage.getEye();
+            cy.get(":nth-child(3) > .list-group > .list-group-item").should(
+              "contain",
+              nouveau
+            );
+
+            ////
+            cy.log("Tab Visualisation")
+            cy.get('#fleets-tab-trips').click()
+            BasePage.pause(1000)
+            cy.get('select').should('be.visible')
+            cy.get('div.card-body').should('be.visible')
+          });
+        });
+      });
     });
 
     it("Filter Test", () => {
-      LoginPage.load();
-      LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
-      BasePage.Sidebar();
-      BasePage.FromSidebarClick("Fleet", "Fleets list");
-      cy.get('input[name="search"]').clear().type(nom);
-      BasePage.Screenshot("Filter-Test-0");
-      cy.get("#inputGroupPrepend").click();
-      BasePage.pause(1500);
-      cy.get("td").contains(nom).should("be.visible").click();
+      let alea2 = Math.floor(Math.random() * 5) + 1;
+
+      cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
+        const name = $td.text().trim();
+        cy.get(`tbody > :nth-child(${alea2}) > :nth-child(2)`).then(($td) => {
+          const email = $td.text().trim();
+          //By name
+          BasePage.SearchByName(name);
+          cy.get("td").contains(name).should("be.visible");
+          //By mail
+          BasePage.Sidebar();
+          BasePage.FromSidebarClick("Fleet", "Fleets list");
+          BasePage.SearchByEmail(email);
+          cy.get("td").contains(email).should("be.visible");
+        });
+      });
     });
 
     it("Disable fleet implies side Effect", () => {
-      LoginPage.load();
-      LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
-      BasePage.Sidebar();
-      BasePage.FromSidebarClick("Fleet", "Fleets list");
-      cy.get('input[name="search"]').clear().type(nom);
-      cy.get("#inputGroupPrepend").click();
-      BasePage.pause(1000);
-      cy.get("td").contains(nom).should("be.visible").click();
-      BasePage.pause(1000);
-      BasePage.Screenshot("Disable-Fleet-0");
-      cy.get("button").contains("Disable fleet").should("be.visible").click();
-      BasePage.pause(2000);
-      BasePage.Screenshot("Disable-Fleet-1");
-      cy.get("td").contains("admin@almady.com").should("be.visible");
-      cy.get("td").contains(nom).should("be.visible").click();
-      BasePage.pause(1000);
-      BasePage.Screenshot("Enable-Fleet-2");
-      cy.get("button").contains("Enable fleet").should("be.visible").click();
+      let alea2 = Math.floor(Math.random() * 5) + 1;
+
+      cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
+        const name = $td.text().trim();
+
+        BasePage.SearchByName(name);
+        BasePage.getEye();
+        cy.get("button").contains("Disable fleet").should("be.visible").click();
+        BasePage.pause(3000);
+        BasePage.SearchByName(name);
+        cy.get("td").contains("admin@almady.com").should("be.visible");
+        BasePage.getEye();
+        cy.get("button").contains("Enable fleet").should("be.visible").click();
+        BasePage.pause(3000);
+      });
     });
   });
+
   //fonctionne
   describe("Fleet Registration", () => {
+    let ph = "+33";
+
     before(function () {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -219,76 +236,110 @@ context("Fleet", () => {
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
       BasePage.Sidebar();
       BasePage.FromSidebarClick("Fleet", "Fleets list");
-      cy.get('input[name="search"]').clear().type(name);
-      cy.get("#inputGroupPrepend").click();
-      BasePage.pause(1500);
+      BasePage.SearchByName(name);
       cy.get("td").contains(name).should("be.visible");
-      BasePage.Screenshot("Register-Fleet-2");
     });
   });
 });
 
 context("Shipment", () => {
-  let pick_up_addr = "22 rue Marie Curie 77310 Saint-Fargeau-Ponthierry";
-  let delivery_addr = "03 rue DES ECUYERS 78100 Saint-Germain-en-Laye";
-  let delivery_day = "2020-07-09";
 
-  let nom = "fleet-0-name";
-  let ema = "fleet@fleet0.com";
-
-  let mobile = "11110";
-  let ph = "+966";
-  let regis = "4554540";
-  //fonctionne
+  //fonctionne[sauf filtre]
   describe("Shipment List", () => {
-    before(function () {
+    beforeEach(() => {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
       BasePage.Sidebar();
       BasePage.FromSidebarClick("Shipment", "Shipments List");
-    });
-
-    it("Click on a Shipment implies Information Visualisation[General Information/Shipment Comments]", () => {
-      cy.get("td")
-        .contains(pick_up_addr)
-        .next()
-        .should("contain", delivery_addr)
-        .click();
-      BasePage.pause(1000);
-      cy.get("div").contains("Delivering informations").should("be.visible");
-      cy.get("div")
-        .contains(`Delivering Day: ${delivery_day}`)
-        .should("be.visible");
-      cy.get("div")
-        .contains(`Pick up Address: ${pick_up_addr}`)
-        .should("be.visible");
-      cy.get("div")
-        .contains(`Deliver Address: ${delivery_addr}`)
-        .should("be.visible");
-
-      //Shipment comments
-      //cy.get('#shipmentsTabs-tab-shipmentComment').click()
-    });
-
-    it("Filter test", () => {
-      LoginPage.load();
-      LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
-      BasePage.Sidebar();
-      BasePage.FromSidebarClick("Shipment", "Shipments List");
-      cy.get('input[name="search"]').type(delivery_day);
-      cy.get("#inputGroupPrepend").click();
-      BasePage.pause(1000);
     });
 
     after(function () {
       BasePage.pause(700);
-      //LoginPage.logout()
+      LoginPage.logout();
     });
+
+    it("Click on a Shipment implies Information Visualisation[General Information/Shipment Comments]", () => {
+      let alea2 = Math.floor(Math.random() * 6) + 1;
+      cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
+        const delivery_day = $td.text().trim();
+        cy.get(`tbody > :nth-child(${alea2}) > :nth-child(2)`).then(($td) => {
+          const pick_up_addr = $td.text().trim();
+
+          cy.get(`tbody > :nth-child(${alea2}) > :nth-child(3)`).then(($td) => {
+            const delivery_addr = $td.text().trim();
+
+            BasePage.getEyeByRowNumber(alea2);
+            cy.get("div")
+              .contains("Delivering informations")
+              .should("be.visible");
+            cy.get("div")
+              .contains(`Delivering Day: ${delivery_day}`)
+              .should("be.visible");
+            cy.get("div")
+              .contains(`Pick up Address: ${pick_up_addr}`)
+              .should("be.visible");
+            cy.get("div")
+              .contains(`Deliver Address: ${delivery_addr}`)
+              .should("be.visible");
+          });
+        });
+      });
+    });
+
+    //filtre ne fonctionne pas
+    it("Filter test", () => {
+      let alea2 = Math.floor(Math.random() * 6) + 1;
+      cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
+        const delivery_day = $td.text().trim();
+        cy.get(`tbody > :nth-child(${alea2}) > :nth-child(2)`).then(($td) => {
+          const pickupAddr = $td.text().trim();
+        cy.get('input[name="deliveryDate"]').type(delivery_day);
+        BasePage.pause(1000)
+        cy.get(".hover-pointer-darker > svg").click(); //bouton recherche
+        BasePage.pause(1000);
+        cy.get('td').contains(pickupAddr).should('be.visible')
+      });
+    });
+    });
+
+    //pas testable car plus de commentaire 
+    it.skip("Check shipment comments and Pagination", () => {
+      let addr = "5 place de l'Eglise 95380 Chennevières-lès-Louvres";
+
+      cy.get("td").contains(addr).click();
+      BasePage.pause(1000);
+      cy.get("#shipmentsTabs-tab-shipmentComment").should("be.visible").click();
+      for (let index = 0; index < 3; index++) {
+        cy.get(":nth-child(1) > .media-body > .card > .card-header").should(
+          "be.visible"
+        );
+        cy.get(":nth-child(2) > .media-body > .card > .card-header").should(
+          "be.visible"
+        );
+        cy.get(":nth-child(3) > .media-body > .card > .card-header").should(
+          "be.visible"
+        );
+        cy.get(":nth-child(3) > .page-link").click();
+      }
+
+      cy.get("#choose-size").select("5");
+      BasePage.pause(1000);
+      cy.get(":nth-child(1) > .media-body > .card > .card-header").should(
+        "be.visible"
+      );
+      cy.get(":nth-child(2) > .media-body > .card > .card-header").should(
+        "be.visible"
+      );
+      cy.get(":nth-child(3) > .media-body > .card > .card-header").should(
+        "be.visible"
+      );
+      cy.get(":nth-child(5) > .media-body > .card > .card-header").should(
+        "be.visible"
+      );
+      cy.get(":nth-child(4) > .media-body > .card > .card-header").should(
+        "be.visible"
+      );
+    });
+
   });
 });
-/*
- *commentaire pour les warehouses
- *filtres
- *Create User
- *Pagination
- */
