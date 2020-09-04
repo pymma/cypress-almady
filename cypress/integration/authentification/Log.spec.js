@@ -12,7 +12,6 @@ context('Authentification', () => {
 
         after(function(){
             BasePage.pause(700)
-            cy.reload()
         })
 
         /*stop the test if one of theses tests fail*/
@@ -27,6 +26,7 @@ context('Authentification', () => {
         })
 
         it('Logout',() => {
+            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             LoginPage.logout()
         })
 
