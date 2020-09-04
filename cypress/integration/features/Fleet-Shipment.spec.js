@@ -88,7 +88,7 @@ let email = frstnm + "@" + entreprise.toLocaleLowerCase() + ".com";
 let regis = LoginPage.Generate_Number(7);
 
 //verified 03/09/2020
-context("Fleet", () => {
+context.skip("Fleet", () => {
   //fonctionne
   describe("Fleet List", () => {
     beforeEach(() => {
@@ -242,7 +242,7 @@ context("Fleet", () => {
   });
 });
 
-context("Shipment", () => {
+context.skip("Shipment", () => {
 
   describe("Shipment List", () => {
     beforeEach(() => {
