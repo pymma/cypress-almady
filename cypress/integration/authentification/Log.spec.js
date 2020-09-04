@@ -21,12 +21,7 @@ context('Authentification', () => {
             }
           });
     
-        it('Login',() => {
-            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
-        })
-
-        it('Logout',() => {
-            cy.reload()
+        it('Login & Logout',() => {
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             LoginPage.logout()
         })
