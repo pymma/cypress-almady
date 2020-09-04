@@ -234,14 +234,18 @@ let truck_regis = LoginPage.Generate_Number(6);
 let brand = Truck_Brandz[Math.floor(Math.random() * Truck_Brandz.length)];
 let Model = Truck_Models[Math.floor(Math.random() * Truck_Models.length)];
 
-//context functions
+/**
+ENSEMBLE DE FONCTION LOCAL 
+**/
 
+/*Cherche dans la section Task et vérifie l'existence dans la table d'une ligne correspondante au paramètre saisie */
 function SearchByNameAndVerifyExistence(prenom, nom) {
   cy.get('input[name="search"]').clear().type(prenom);
-  cy.get("#inputGroupPrepend").click();
-  BasePage.pause(1000);
+  BasePage.ResearchButton()
   cy.get("td").contains(prenom).next().contains(nom).should("be.visible");
 }
+
+/*Verifie l'adequation des paramètres et des informations présentes dans la view d'un driver*/
 function VerifData(prenom,nom, cell_phone_number, email, job, addr, brand, Model){
   //Contact
   cy.get(
@@ -295,6 +299,8 @@ function VerifData(prenom,nom, cell_phone_number, email, job, addr, brand, Model
   cy.get("#transportType").should("have.value", "Vsmall"); 
 
 }
+
+//------------------------------------------------------------//
 
 //fonctionne 25/08/2020
 context.skip("Driver", () => {
@@ -480,7 +486,6 @@ context.skip("Driver", () => {
   });
 });
 
-//-------------------------------------------------------------------------------------------------
 //change vehicule info ne fonctionne pas
 context.skip("Driver", () => {
   describe.skip("Register a Driver[As Admin]", () => {
@@ -627,8 +632,6 @@ context.skip("Driver", () => {
     });
   });
 });
-
-//--------------------------------------------------------------------------------------------------------------------------
 
 context("Driver - Fleet", () => {
 

@@ -49,8 +49,10 @@ les builds sont paramétrables dans la section Configurer après avoir crée un 
         "mochaFile": "cypress/results/my-test-output-[hash].xml",
         "toConsole": false
         }*
-    + intaller les dépendances suivante : 
+    + intaller les dépendances suivantes : 
     *Coté Jenkins*
+
+
 ###Mise En Place des ScreenShots et Videos avec cypress
 
 1- Mise en place des screenShots :
@@ -59,8 +61,42 @@ les builds sont paramétrables dans la section Configurer après avoir crée un 
      dans le fichier de configuration 'config.js' qui se situe dans le répertoire 'classes'
    - Les screenshots pourront être retrouvés dans le répertoire *'screenShots'*
 
-2- Mise en place des videos[Attention les videos ne sont disponible que si il s'agit d'un execution à partir du terminal Ex:*cy:run*] :
+2- Mise en place des videos[Attention les videos ne sont disponibles que si il s'agit d'un éxécution à partir du terminal Ex:*cy:run*] :
    - Pour disposer de la fonction du recording il faut mettre l'attribut *'video'* à *true*(qui est par défault à false),
      dans le fichier de configuration *'cypress.json'*
    - Les videos sont record sous un format compressé ne garantissant pas une résolution optimale de la video(la fonction de compression peut être désactivé)
    - Les vidéos pourront être retrouvés dans le répertoire *'videos'*
+
+###Fichier config.js
+
+Le fichier *config.js* permet de centralisé toutes les informations paramétrables tel que : 
+ - La possibilité de faire des screens avec la constante *SCREEN*
+ - Les identifiants du 'super admin' soit LOGIN_USERNAME et LOGIN_PASSWORD
+ - Les identifiants d'un 'fleet admin' soit LOGIN_FLEET et FLEET_PASSWORD
+ - Le mot de passe par défaut utiliser lors du changement de mot de passe après la création d'un compte soit DRIVER_DEFAULT_PASSWORD
+ - Les identifiants d'un 'driver' soit LOGIN_NUM et DRIVER_PASSWORD
+ - Les identifiants d'un 'vendor' LOGIN_VENDOR et PASSWORD_ECOMMERCE
+ - Les identifiants d'un 'ecommerce vendor' LOGIN_E_VENDOR et PASSWORD_ECOMMERCE
+ - L'adresse de défaut pour la section "Available trip' soit CURRENT_ADRESSE  
+ /!\ Attention les identifiants des différentes profils utilisés doivent avoir les sections "% list" non vide, il s'agit d'un condition indispensable au bon fonctionnement des tests du fichiers "DifferentProfile.spec.js" 
+
+ ###Fichier de Test
+
+- Complement.spec.js
+  Ce fichier teste les sections 'manage' et 'Order' du Super Admin.
+
+- DifferentProfile.spec.js
+  Ce fichier teste les différents profiles soit un fleet admin, un driver, un E-commerce vendor, et un vendor
+
+- Fleet-Shipments.spec.js
+  Ce fichier teste les sections 'fleet' et 'Shipment'
+
+- Trips.spec.js
+  Ce fichier teste la section 'Trips'
+ 
+- User.spec.js
+  Ce fichier teste la section 'User'
+
+- Vendor.spec.js
+  Ce fichier teste les sections 'Vendor','E-commerce Vendor' et 'company' 
+

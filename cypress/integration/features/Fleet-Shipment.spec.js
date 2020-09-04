@@ -1,7 +1,9 @@
 import BasePage from "../../classes/BasePage";
 import LoginPage from "../../classes/LoginPage";
 import { LOGIN_USERNAME, LOGIN_PASSWORD } from "../../classes/config";
-
+/**
+VARIABLES/CONSTANTES
+**/
 let Firstname = [
   "Tennesse",
   "Francois",
@@ -85,7 +87,7 @@ let phone = LoginPage.Generate_Number(10);
 let email = frstnm + "@" + entreprise.toLocaleLowerCase() + ".com";
 let regis = LoginPage.Generate_Number(7);
 
-//verified 08/20/2020
+//verified 03/09/2020
 context("Fleet", () => {
   //fonctionne
   describe("Fleet List", () => {
@@ -116,7 +118,7 @@ context("Fleet", () => {
             let tete = "Registration Certificate:";
             const regis = $td.text().trim().substring(tete.length).trim();
 
-            cy.get("h3").contains("Fleet Information").should("be.visible");
+            cy.get("h3").contains("Fleet information").should("be.visible");
             cy.get("div.list-group-item")
               .contains(`Fleet name: ${nom}`)
               .should("be.visible");
@@ -142,13 +144,11 @@ context("Fleet", () => {
 
             let nouveau = LoginPage.Generate_Number(7);
             BasePage.pause(1000);
-            cy.get("button").contains("Update fleet").click();
+            cy.get("button").contains("Change data").click();
             BasePage.pause(1000);
             cy.get("#phoneNumber").clear().type(nouveau);
             cy.get("button").contains("Save change").click();
             BasePage.pause(3000);
-            BasePage.SearchByName(nom);
-            BasePage.getEye();
             cy.get(":nth-child(3) > .list-group > .list-group-item").should(
               "contain",
               nouveau
@@ -227,7 +227,7 @@ context("Fleet", () => {
       cy.get("#email").clear().type(email);
       cy.get("#registrationCertificate").clear().type(regis);
       BasePage.Screenshot("Register-Fleet-1");
-      cy.get("button").contains("register fleet").click();
+      cy.get("button").contains("Register fleet").click();
       BasePage.pause(1000);
     });
 
@@ -244,7 +244,6 @@ context("Fleet", () => {
 
 context("Shipment", () => {
 
-  //fonctionne[sauf filtre]
   describe("Shipment List", () => {
     beforeEach(() => {
       LoginPage.load();
@@ -285,8 +284,6 @@ context("Shipment", () => {
         });
       });
     });
-
-    //filtre ne fonctionne pas
     it("Filter test", () => {
       let alea2 = Math.floor(Math.random() * 6) + 1;
       cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
@@ -295,7 +292,7 @@ context("Shipment", () => {
           const pickupAddr = $td.text().trim();
         cy.get('input[name="deliveryDate"]').type(delivery_day);
         BasePage.pause(1000)
-        cy.get(".hover-pointer-darker > svg").click(); //bouton recherche
+        cy.get('.align-items-center > :nth-child(2)').click(); //bouton recherche
         BasePage.pause(1000);
         cy.get('td').contains(pickupAddr).should('be.visible')
       });

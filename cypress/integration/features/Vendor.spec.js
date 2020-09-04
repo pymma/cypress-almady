@@ -2,6 +2,9 @@ import BasePage from "../../classes/BasePage";
 import LoginPage from "../../classes/LoginPage";
 import { LOGIN_USERNAME, LOGIN_PASSWORD } from "../../classes/config";
 
+/**
+VARIABLES/CONSTANTES
+**/
 let Firstname = [
   "Tennesse",
   "Francois",
@@ -136,9 +139,11 @@ let email =
 let name = company + "-" + ext + "-" + identifation;
 let Registration = company + "-" + ext;
 
+//----------------------------------------------------------------//
+
 context("Vendor[e-commerce include]", () => {
   //fonctionne
-  describe("Vendor Registration", () => {
+  describe.skip("Vendor Registration", () => {
     before(function () {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -160,9 +165,9 @@ context("Vendor[e-commerce include]", () => {
       cy.get("#defaultWarehouseName").type(warehouse);
       cy.get("#completeAddress").type(addr);
       cy.get("#details").type("Damien Marley - So a Child May Follow");
-      BasePage.pause(2000)
+      BasePage.pause(2000);
       cy.get("button").contains("Register").click();
-      BasePage.pause(2000)
+      BasePage.pause(2000);
     });
 
     it("New Registration should be visible in Vendors Section", () => {
@@ -177,7 +182,7 @@ context("Vendor[e-commerce include]", () => {
   });
 
   //fonctionne
-  describe("Vendor List", () => {
+  describe.skip("Vendor List", () => {
     let ville = warehouses[Math.floor(Math.random() * warehouses.length)];
     let compAddr = LoginPage.Generate_Number(5);
     let new_r = "leave next to the door[" + LoginPage.Generate_Number(5) + "]";
@@ -234,11 +239,20 @@ context("Vendor[e-commerce include]", () => {
             cy.get("#name").type(ville);
             cy.get("#details").type("Warehouse added during the Test session");
             cy.get("#completeAddress").type(compAddr);
+            BasePage.pause(2000);
             cy.get("button").contains("Register").click();
             BasePage.pause(1000);
-            cy.reload();
+            //cy.reload();
             BasePage.pause(1000);
-            cy.get("span").contains("WAREHOUSE LIST").click();
+            cy.get("span").contains("Warehouse list").click();
+            BasePage.pause(1000);
+            cy.get(
+              ":nth-child(1) > .card > .card-body > .row > .align-items-center > .input-group > .form-control"
+            ).type(ville);
+            BasePage.pause(1000);
+            cy.get(
+              ":nth-child(1) > .card > .card-body > .row > .align-items-center > :nth-child(2)"
+            ).click();
             BasePage.pause(1000);
             cy.get("td").contains(ville).should("be.visible");
 
@@ -250,12 +264,14 @@ context("Vendor[e-commerce include]", () => {
             BasePage.SearchByName(name);
             BasePage.getEye();
 
-            cy.get("span").contains("WAREHOUSE LIST").click();
+            cy.get("span").contains("Warehouse list").click();
             BasePage.pause(1000);
             cy.get(
               ":nth-child(1) > .card > .card-body > .row > .align-items-center > .input-group > .form-control"
             ).type(ville);
-            cy.get("#inputGroupPrepend").click();
+            cy.get(
+              ":nth-child(1) > .card > .card-body > .row > .align-items-center > :nth-child(2)"
+            ).click();
             BasePage.pause(1000);
             cy.get(
               ".collapse > :nth-child(2) > .card-body > .table-responsive > .table > tbody > tr > .hover-pointer > svg > path"
@@ -324,6 +340,8 @@ context("Vendor[e-commerce include]", () => {
         BasePage.getEye();
         cy.get("button").contains("Disable").click();
         BasePage.pause(2000);
+        BasePage.Sidebar();
+        BasePage.FromSidebarClick("Vendor", "Vendors list");
         BasePage.SearchByName(name);
         cy.get("td").contains("admin@almady.com").should("be.visible");
         BasePage.getEye();
@@ -336,7 +354,7 @@ context("Vendor[e-commerce include]", () => {
   //----------------------------------------------------------------------------------------------------------------------------------//
 
   // ne fonctionne pas
-  describe.skip("E-Commerce Registration", () => {
+  describe("E-Commerce Registration", () => {
     let Firstname = [
       "Tennesse",
       "Francois",
@@ -438,7 +456,7 @@ context("Vendor[e-commerce include]", () => {
       LoginPage.logout();
     });
 
-    it("Register a E-commerce bussiness", () => {
+    it("Register a E-commerce bussiness & Verify registration accurancy", () => {
       BasePage.Sidebar();
       BasePage.FromSidebarClick("Ecommerce", "Register e-commerce");
       cy.get("#name").type(name);
@@ -448,24 +466,20 @@ context("Vendor[e-commerce include]", () => {
       cy.get("#registrationName").type(Registration);
       cy.get("#internetName").type(internal);
       cy.get("#companyName").type(company);
-      BasePage.pause(2000);
+      BasePage.pause(5000);
       cy.get("button.btn.btn-dark.btn-lg")
-        .contains("register e-commerce")
+        .contains("Register e-commerce")
         .click();
       BasePage.pause(2000);
-    });
-
-    it("New Registration should be visible in E-Commerce Section", () => {
-      cy.reload();
-      LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
       BasePage.Sidebar();
       BasePage.FromSidebarClick("Ecommerce", "E-commerces list");
+      BasePage.SearchByName(name)
       cy.get("td").contains(name).should("be.visible");
     });
   });
 
   //fonctionne
-  describe("E-Commerce List", () => {
+  describe.skip("E-Commerce List", () => {
     function getTestContext(nom) {
       BasePage.Sidebar();
       BasePage.FromSidebarClick("Ecommerce", "E-commerces list");
@@ -497,7 +511,7 @@ context("Vendor[e-commerce include]", () => {
             BasePage.getEye();
 
             cy.get(
-              `:nth-child(3) > :nth-child(1) > :nth-child(1) > .card > .card-body > :nth-child(1) > :nth-child(2) > .list-group > .list-group-item`
+              ":nth-child(3) > .card > .card-body > :nth-child(1) > :nth-child(2) > .list-group > .list-group-item"
             ).then(($td) => {
               const comp_name = $td.text().substr(14).trim();
 
@@ -574,10 +588,9 @@ context("Vendor[e-commerce include]", () => {
   });
 });
 
-context("Company", () => {
+context.skip("Company", () => {
   //fonctionne
   describe("Companies List", () => {
-
     beforeEach(() => {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -606,7 +619,7 @@ context("Company", () => {
                 cy.get(":nth-child(1) > .hover-pointer > svg").click();
                 BasePage.pause(1000);
                 cy.get("h3")
-                  .contains("Company Information")
+                  .contains("Company information")
                   .should("be.visible");
                 cy.get("div")
                   .contains(`Registration Certificate: ${registration}`)
@@ -622,8 +635,8 @@ context("Company", () => {
                 //////
                 cy.log("GROUP VISUALISATION");
 
-                let option = [`${name}_main`,`${name}_admin`];
-                cy.get("span").contains("Groups").should("be.visible");
+                let option = [`${name}_main`, `${name}_admin`];
+                cy.get("span").contains("List group").should("be.visible");
                 for (let index = 0; index < option.length; index++) {
                   let value = option[index];
                   cy.get("option").contains(value);
@@ -635,7 +648,6 @@ context("Company", () => {
       });
     });
 
-
     it("Filter Test", () => {
       let alea2 = Math.floor(Math.random() * 6) + 1;
       cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
@@ -643,7 +655,7 @@ context("Company", () => {
         cy.get(`tbody > :nth-child(${alea2}) > :nth-child(2)`).then(($td) => {
           const email = $td.text().trim();
           cy.get(`tbody > :nth-child(${alea2}) > :nth-child(3)`).then(($td) => {
-            const prefix = "+966"
+            const prefix = "+966";
             const phone = $td.text().trim().substring(prefix.length).trim();
             // By Name
             BasePage.SearchByName(name);
@@ -663,4 +675,4 @@ context("Company", () => {
   });
 });
 
-//verified 08/20/2020
+

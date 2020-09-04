@@ -22,6 +22,12 @@ export default class BasePage {
     cy.wait(x);
   }
 
+  static ResearchButton(){
+    BasePage.pause(1000);
+    cy.get('.align-items-center > :nth-child(2)').click();
+    BasePage.pause(1000);
+  }
+
   static Sidebar() {
     cy.get("div.sidebar-button.button-open").click();
     BasePage.pause(500);
@@ -29,26 +35,17 @@ export default class BasePage {
 
   static SearchByName(name) {
     cy.get('[name="name"]').clear().type(name);
-    BasePage.pause(1000);
-    //cy.get(".hover-pointer-darker > svg").click();
-    cy.get(".align-items-center > .hover-pointer-darker").click();
-    BasePage.pause(1000);
+    BasePage.ResearchButton()
   }
 
   static SearchByPhone(name) {
     cy.get('[name="phoneNumber"]').clear().type(name);
-    BasePage.pause(1000);
-    //cy.get(".hover-pointer-darker > svg").click();
-    cy.get(".align-items-center > .hover-pointer-darker").click();
-    BasePage.pause(1000);
+    BasePage.ResearchButton()
   }
 
   static SearchByEmail(name) {
     cy.get('[name="email"]').clear().type(name);
-    BasePage.pause(1000);
-    //cy.get(".hover-pointer-darker > svg").click();
-    cy.get(".align-items-center > .hover-pointer-darker").click();
-    BasePage.pause(1000);
+    BasePage.ResearchButton()
   }
 
   static getEyeByRowNumber(number) {
@@ -162,7 +159,7 @@ export default class BasePage {
         break;
       case "products list":
         cy.get(
-          ':nth-child(2) > [style="background-color: gray;"] > a > .hover-pointer-darker > div'
+          ':nth-child(3) > [style="background-color: gray;"] > a > .hover-pointer-darker > div'
         ).click();
         break;
       case "products list[E-Commerce]":

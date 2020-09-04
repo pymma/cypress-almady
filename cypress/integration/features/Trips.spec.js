@@ -6,9 +6,9 @@ import {
   CURRENT_ADRESSE,
 } from "../../classes/config";
 
-  //verified the 08/20/2020
+  //verified the 02/09/2020
 context("Trips", () => {
-  describe.skip("Available Trips", () => {
+  describe("Available Trips", () => {
     before(function () {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -118,7 +118,7 @@ context("Trips", () => {
     });
   });
 
-  describe.skip("Trips List", () => {
+  describe("Trips List", () => {
     beforeEach(() => {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -136,8 +136,6 @@ context("Trips", () => {
         cy.get("td").contains(name).should("be.visible");
         BasePage.getEyeByRowNumber(1);
         cy.get("div.modal-body").should("be.visible");
-        cy.get("button").contains("Start Trip").should("be.visible");
-        cy.get("button").contains("Delete trip").should("be.visible");
       });
     });
 
@@ -178,17 +176,17 @@ context("Trips", () => {
                 BasePage.pause(1000);
                 cy.get("td").contains(name).should("be.visible");
                 //// dont work
-                /*cy.log("Filter by Date")
-              BasePage.Sidebar();
-              BasePage.FromSidebarClick("Trip", "Trip list");
-              cy.get('select[name="choose"]').select("DATE");
-              BasePage.pause(500);
-              cy.get('input[name="date"]').type(date);
-              BasePage.pause(500);
-              cy.get("#inputGroupPrepend").click();
-              BasePage.pause(1000);
-              cy.get("td").contains(name).should("be.visible");
-              ////*/
+                cy.log("Filter by Date")
+                BasePage.Sidebar();
+                BasePage.FromSidebarClick("Trip", "Trip list");
+                cy.get('select[name="choose"]').select("DATE");
+                BasePage.pause(500);
+                cy.get('input[name="date"]').type(date);
+                BasePage.pause(500);
+                cy.get("#inputGroupPrepend").click();
+                BasePage.pause(1000);
+                cy.get("td").contains(name).should("be.visible");
+                ////
                 cy.log("Filter by Location");
                 cy.get('select[name="choose"]').select("LOCATION");
                 BasePage.pause(500);
@@ -203,5 +201,3 @@ context("Trips", () => {
     });
   });
 });
-
-//Il faut que le filtre par date fonctionne

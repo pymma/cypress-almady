@@ -2,9 +2,8 @@ import BasePage from "../../classes/BasePage";
 import LoginPage from "../../classes/LoginPage";
 import { LOGIN_USERNAME, LOGIN_PASSWORD } from "../../classes/config";
 
-//verified the 08/20/2020
+//verified the 03/09/2020
 context("User", () => {
-  //fonctionnne
   describe("User List", () => {
     before(function () {
       LoginPage.load();
@@ -79,7 +78,6 @@ context("User", () => {
     });
 
     it("Create a Random User[Randomly]", () => {
-      ////
       cy.log("Choose a Company among those proposed");
       BasePage.Sidebar();
       BasePage.FromSidebarClick("User", "Create user");
