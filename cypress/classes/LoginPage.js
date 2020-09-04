@@ -22,8 +22,8 @@ export default class LoginPage {
 
   /*log in a user account*/
   static login(username, password) {
-    cy.get("#username").type(username);
-    cy.get("#password").type(password);
+    cy.get("#username").clear().type(username);
+    cy.get("#password").clear().type(password);
     BasePage.Screenshot();
     cy.get("button.btn.btn-outline-info").contains("Sign in").click();
     BasePage.pause(1000);

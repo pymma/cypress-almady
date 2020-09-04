@@ -26,8 +26,8 @@ context('Authentification', () => {
         })
 
         it('Logout',() => {
-            cy.Get('button').contains('Sign in').click()
-            BasePage.pause(1000)
+            cy.reload()
+            LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
             LoginPage.logout()
         })
 
