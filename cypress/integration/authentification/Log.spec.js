@@ -21,8 +21,11 @@ context('Authentification', () => {
             }
           });
     
-        it('Login & Logout',() => {
+        it('Login',() => {
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+        })
+
+        it('Logout',() => {
             LoginPage.logout()
         })
 

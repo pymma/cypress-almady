@@ -5,7 +5,7 @@ export const env = {
   dev: "https://almady.dev.infra.pymma-software.net",
   testing: "https://almady.dev.infra.pymma-software.net/",
   staging: "https://almady.dev.infra.pymma-software.net/",
-  prod: "",
+  prod: "https://almady.dev.infra.pymma-software.net/",
 };
 
 //en dev pour le moment au final faudra le mettre dans le testing
