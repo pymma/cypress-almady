@@ -22,42 +22,50 @@ export default class BasePage {
     cy.wait(x);
   }
 
+  /*Click on the Reseach button*/
   static ResearchButton(){
     BasePage.pause(1000);
     cy.get('.align-items-center > :nth-child(2)').click();
     BasePage.pause(1000);
   }
 
+  /*Show the Sidebar*/
   static Sidebar() {
     cy.get("div.sidebar-button.button-open").click();
     BasePage.pause(500);
   }
 
+  /*Search by name & display the results*/
   static SearchByName(name) {
     cy.get('[name="name"]').clear().type(name);
     BasePage.ResearchButton()
   }
 
+  /*Search by phone number & display the results*/
   static SearchByPhone(name) {
     cy.get('[name="phoneNumber"]').clear().type(name);
     BasePage.ResearchButton()
   }
 
+  /*Search by email & display the results*/
   static SearchByEmail(name) {
     cy.get('[name="email"]').clear().type(name);
     BasePage.ResearchButton()
   }
 
+  /*Click on the table line given as parameter & display the profile of a driver*/
   static getEyeByRowNumber(number) {
     cy.get(`:nth-child(${number}) > .hover-pointer > svg`).click();
     BasePage.pause(1000);
   }
 
+  /*Click on the first profile of the given table*/
   static getEye() {
     cy.get(":nth-child(1) > .hover-pointer > svg").click();
     BasePage.pause(1000);
   }
 
+  /*Click on the Section & open a subsection based on given parameters*/
   static FromSidebarClick(option_name, expr) {
     cy.get("span").contains(option_name).click();
     BasePage.pause(1000);
@@ -198,9 +206,6 @@ export default class BasePage {
         ).click();
         break;
       default:
-        /*window.alert(
-          "PathError: Not find the Section[refresh Basepage.js by actualising FromSideBar Function]"
-        );*/
         break;
     }
     BasePage.pause(3500);
@@ -208,11 +213,13 @@ export default class BasePage {
     BasePage.CloseSideBar();
   }
 
+  /*Close the sidebar*/
   static CloseSideBar() {
     cy.get("div.sidebar-button.button-close.hover-pointer-brighter").click();
     BasePage.pause(500);
   }
 
+  /*Make a Screenshot based on the attribute SCREEN in config.js file*/
   static Screenshot(name) {
     if (SCREEN === true) {
       cy.screenshot(name);
