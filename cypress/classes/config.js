@@ -3,7 +3,7 @@
 export const LOGIN_USERNAME = 'admin@almady.com'
 export const LOGIN_PASSWORD = 'admin'
 export const DRIVER_DEFAULT_PASSWORD = 'Utilisateur10+'
-export const LOGIN_FLEET = "LePlaisirDeRoulerASaSource"
+export const LOGIN_FLEET = "L'assuranceD'atteindreVosButsALaPointe"
 export const FLEET_PASSWORD = "Utilisateur10+"
 export const LOGIN_NUM = "2222105408"
 export const DRIVER_PASSWORD = "2222105408"

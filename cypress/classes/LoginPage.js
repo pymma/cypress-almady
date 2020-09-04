@@ -1,9 +1,10 @@
 import BasePage from "./BasePage";
 
+
 export const env = {
-  dev: "http://localhost:3000/login",
-  testing: "https://almady.infra.pymma-software.net/",
-  staging: "https://almady.infra.pymma-software.net/",
+  dev: "https://almady.dev.infra.pymma-software.net",
+  testing: "https://almady.dev.infra.pymma-software.net/",
+  staging: "https://almady.dev.infra.pymma-software.net/",
   prod: "",
 };
 
@@ -147,7 +148,7 @@ export default class LoginPage {
 
   static SubmitRegister() {
     BasePage.pause(1000);
-    cy.get("button.btn.btn-primary.btn-lg").contains("Register Driver").click();
+    cy.get("button").contains("Register Driver").click();
     BasePage.pause(4000)
   }
 }

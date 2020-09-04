@@ -374,7 +374,7 @@ context.skip("E-Commerce Vendor", () => {
   });
 });
 
-context("Fleet", () => {
+context.skip("Fleet", () => {
   //fonctionne
   describe("Fleet Driver", () => {
     beforeEach(() => {

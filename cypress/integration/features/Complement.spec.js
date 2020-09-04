@@ -60,7 +60,7 @@ function filterBycode(code) {
 //---------------------------------------------------------------------*/
 
 //verified the 03/09/2020
-context("Order", () => {
+context.skip("Order", () => {
   //fonctionnne
   describe("Order List", () => {
     beforeEach(() => {
@@ -135,7 +135,7 @@ context("Order", () => {
 });
 
 //verified the 03/09/2020
-context("Manage", () => {
+context.skip("Manage", () => {
   let codes = ["NEW", "UPDATE", "COMPLETE", "CLOSE", "PROCESS"];
   let date = new Date();
   let hoy = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;

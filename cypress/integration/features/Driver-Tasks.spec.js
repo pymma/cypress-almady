@@ -6,7 +6,7 @@ import {
   LOGIN_PASSWORD,
   DRIVER_DEFAULT_PASSWORD,
   LOGIN_FLEET,
-  FLEET_PASSWORD
+  FLEET_PASSWORD,
 } from "../../classes/config";
 
 //Information
@@ -241,12 +241,21 @@ ENSEMBLE DE FONCTION LOCAL
 /*Cherche dans la section Task et vérifie l'existence dans la table d'une ligne correspondante au paramètre saisie */
 function SearchByNameAndVerifyExistence(prenom, nom) {
   cy.get('input[name="search"]').clear().type(prenom);
-  BasePage.ResearchButton()
+  BasePage.ResearchButton();
   cy.get("td").contains(prenom).next().contains(nom).should("be.visible");
 }
 
 /*Verifie l'adequation des paramètres et des informations présentes dans la view d'un driver*/
-function VerifData(prenom,nom, cell_phone_number, email, job, addr, brand, Model){
+function VerifData(
+  prenom,
+  nom,
+  cell_phone_number,
+  email,
+  job,
+  addr,
+  brand,
+  Model
+) {
   //Contact
   cy.get(
     "span.MuiTypography-root.MuiListItemText-primary.MuiTypography-body1.MuiTypography-displayBlock"
@@ -280,24 +289,21 @@ function VerifData(prenom,nom, cell_phone_number, email, job, addr, brand, Model
   cy.get("#rcCopyDocument").should("have.class", "fileSavedColor");
   cy.get("#panCardDocument").should("have.class", "fileSavedColor");
   //Planning
-  cy.get("td.delete-part-row")
-    .contains("08:00 - 20:00")
-    .should("be.visible");
-  cy.get("td.delete-part-row")
-    .contains("15:00 - 22:00")
-    .should("be.visible");
-  cy.get("td.delete-part-row")
-    .contains("15:00 - 22:00")
-    .should("be.visible");
+  cy.get("td.delete-part-row").contains("08:00 - 20:00").should("be.visible");
+  cy.get("td.delete-part-row").contains("15:00 - 22:00").should("be.visible");
+  cy.get("td.delete-part-row").contains("15:00 - 22:00").should("be.visible");
   //Vehicule Information
-  cy.get('[name="truckRegistrationNumber"]').should(
-    "have.value",
-    truck_regis
-  );
+  cy.get('[name="truckRegistrationNumber"]').should("have.value", truck_regis);
   cy.get('[name="truckBrand"]').should("have.value", brand);
   cy.get('[name="truckModel"]').should("have.value", Model);
-  cy.get("#transportType").should("have.value", "Vsmall"); 
+  cy.get("#transportType").should("have.value", "Vsmall");
+}
 
+function ChooseFleet() {
+  cy.get("button").contains("Choose a fleet").click();
+  BasePage.pause(1000);
+  cy.get(".color-green > path").click();
+  BasePage.pause(1000);
 }
 
 //------------------------------------------------------------//
@@ -376,24 +382,24 @@ context.skip("Driver", () => {
 
     //Les comptes des drivers à validé
     it(`Verify the driver ${prenom} ${nom} is visible and not processed`, () => {
-      SearchByNameAndVerifyExistence(prenom,nom)
+      SearchByNameAndVerifyExistence(prenom, nom);
       cy.get("td")
         .contains("Verify Driver data before final validation")
         .should("be.visible");
     });
 
     it("Verify the Data from the precedent driver", () => {
-      SearchByNameAndVerifyExistence(prenom,nom)
-      cy.get('td').contains(prenom).click()
-      BasePage.pause(1000)
-      VerifData(prenom,nom, cell_phone_number, email, job, addr, brand, Model)
-      });
+      SearchByNameAndVerifyExistence(prenom, nom);
+      cy.get("td").contains(prenom).click();
+      BasePage.pause(1000);
+      VerifData(prenom, nom, cell_phone_number, email, job, addr, brand, Model);
+    });
 
     //non verifier
     it("Claim The Task", () => {
-      SearchByNameAndVerifyExistence(prenom,nom)
-      cy.get('td').contains(prenom).click()
-      BasePage.pause(1000)
+      SearchByNameAndVerifyExistence(prenom, nom);
+      cy.get("td").contains(prenom).click();
+      BasePage.pause(1000);
       cy.get("button.btn.btn-primary.btn-lg").contains("Claim Task").click();
       BasePage.pause(1000);
       cy.get("button")
@@ -409,9 +415,9 @@ context.skip("Driver", () => {
     });
 
     it("Start The Task", () => {
-      SearchByNameAndVerifyExistence(prenom,nom)
-      cy.get('td').contains(prenom).click()
-      BasePage.pause(1000)
+      SearchByNameAndVerifyExistence(prenom, nom);
+      cy.get("td").contains(prenom).click();
+      BasePage.pause(1000);
       cy.get("button").contains("Start the task").click();
       BasePage.pause(1000);
       cy.get("button")
@@ -427,9 +433,9 @@ context.skip("Driver", () => {
     });
 
     it("Stop The Task", () => {
-      SearchByNameAndVerifyExistence(prenom,nom)
-      cy.get('td').contains(prenom).click()
-      BasePage.pause(1000)
+      SearchByNameAndVerifyExistence(prenom, nom);
+      cy.get("td").contains(prenom).click();
+      BasePage.pause(1000);
       cy.get("button").contains("Stop the task").click();
       BasePage.pause(1000);
       cy.get("button")
@@ -445,25 +451,24 @@ context.skip("Driver", () => {
     });
 
     it("Validate The Task & Save Profile & Change Password", () => {
-      SearchByNameAndVerifyExistence(prenom,nom)
-      cy.get('td').contains(prenom).click()
-      BasePage.pause(1000)
+      SearchByNameAndVerifyExistence(prenom, nom);
+      cy.get("td").contains(prenom).click();
+      BasePage.pause(1000);
       cy.get("button").contains("Start the task").click();
       BasePage.pause(1000);
       cy.get("button.save-button.btn.btn-success.btn-lg")
         .contains("Save profile")
         .click();
       BasePage.pause(3000);
-      LoginPage.logout()
-      cy.log("Mot de passe")
-      LoginPage.load()
-      LoginPage.login(cell_phone_number,cell_phone_number)
-      BasePage.pause(1000)
-      cy.get('input[name="newPassword"]').type(DRIVER_DEFAULT_PASSWORD)
-      cy.get('input[name="repeatNewPassword"]').type(DRIVER_DEFAULT_PASSWORD)
-      cy.get('button.btn.btn-primary').contains("Submit").click()
+      LoginPage.logout();
+      cy.log("Mot de passe");
+      LoginPage.load();
+      LoginPage.login(cell_phone_number, cell_phone_number);
+      BasePage.pause(1000);
+      cy.get('input[name="newPassword"]').type(DRIVER_DEFAULT_PASSWORD);
+      cy.get('input[name="repeatNewPassword"]').type(DRIVER_DEFAULT_PASSWORD);
+      cy.get("button.btn.btn-primary").contains("Submit").click();
     });
-
   });
 
   describe("Registration Verification[As Driver]", () => {
@@ -530,7 +535,7 @@ context.skip("Driver", () => {
       LoginPage.FillThePlanning();
       let box = "hot";
       LoginPage.FillTransportBox(box);
-      BasePage.pause(1000)
+      BasePage.pause(1000);
       LoginPage.SubmitRegister();
       BasePage.pause(3000);
     });
@@ -546,7 +551,6 @@ context.skip("Driver", () => {
   });
 
   describe("Driver List", () => {
-
     beforeEach(() => {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -557,35 +561,39 @@ context.skip("Driver", () => {
     it("Select a Driver & Check a Driver Information", () => {
       let alea2 = Math.floor(Math.random() * 13) + 1;
       cy.get(`tbody > :nth-child(${alea2}) > :nth-child(1)`).then(($td) => {
-        const firstN = $td.text()
+        const firstN = $td.text();
         cy.get(`tbody > :nth-child(${alea2}) > :nth-child(2)`).then(($td) => {
-          const LastN = $td.text()
+          const LastN = $td.text();
           cy.get(`tbody > :nth-child(${alea2}) > :nth-child(3)`).then(($td) => {
-            const email = $td.text()
-            cy.get(`tbody > :nth-child(${alea2}) > :nth-child(5)`).then(($td) => {
-              BasePage.getEyeByRowNumber(alea2)
-              cy.get("h3").contains("General Information").should("be.visible");
-              cy.get("div").contains(firstN).should("be.visible");
-              cy.get("div").contains(LastN).should("be.visible");
-              cy.get("div").contains(email).should("be.visible");
-            })
-          })
-        })
-      })
+            const email = $td.text();
+            cy.get(`tbody > :nth-child(${alea2}) > :nth-child(5)`).then(
+              ($td) => {
+                BasePage.getEyeByRowNumber(alea2);
+                cy.get("h3")
+                  .contains("General Information")
+                  .should("be.visible");
+                cy.get("div").contains(firstN).should("be.visible");
+                cy.get("div").contains(LastN).should("be.visible");
+                cy.get("div").contains(email).should("be.visible");
+              }
+            );
+          });
+        });
+      });
     });
 
     it("Change Vehicule Information", () => {
       let alea2 = Math.floor(Math.random() * 13) + 1;
-      BasePage.getEyeByRowNumber(alea2)
+      BasePage.getEyeByRowNumber(alea2);
       cy.get("button.btn.btn-primary").contains("Change data").click();
       BasePage.pause(1000);
       cy.get('[name="truckBrand"]').clear().type("Lamborghini");
       cy.get('[name="truckModel"]').clear().type("Urus");
-      cy.get('#transportType').select('Small vehicle')
-      cy.get('#allTruckType').select('fragile')
-      cy.get('#box').select('fragile')
-      cy.get('button').contains('Add').click()
-      BasePage.pause(1000)
+      cy.get("#transportType").select("Small vehicle");
+      cy.get("#allTruckType").select("fragile");
+      cy.get("#box").select("fragile");
+      cy.get("button").contains("Add").click();
+      BasePage.pause(1000);
       cy.get("button.btn.btn-primary").contains("Save change").click();
       BasePage.pause(1000);
       cy.get("div").contains("Lamborghini").should("be.visible");
@@ -595,36 +603,41 @@ context.skip("Driver", () => {
     it("Change a Driver Information & Reset Default values after test", () => {
       let new_job = "Zoologist";
       let alea2 = Math.floor(Math.random() * 13) + 1;
-      BasePage.getEyeByRowNumber(alea2)
-      cy.get(":nth-child(2) > :nth-child(1) > .card > .card-body > :nth-child(3) > :nth-child(1) > .list-group > .list-group-item").then(($td) => {
-        const Job = $td.text()
-        const entete = "Previous job: "
-        const pvJob = Job.substring(entete.length).trim()
+      BasePage.getEyeByRowNumber(alea2);
+      cy.get(
+        ":nth-child(2) > :nth-child(1) > .card > .card-body > :nth-child(3) > :nth-child(1) > .list-group > .list-group-item"
+      ).then(($td) => {
+        const Job = $td.text();
+        const entete = "Previous job: ";
+        const pvJob = Job.substring(entete.length).trim();
         cy.get("center > .btn").contains("Change data").click();
         BasePage.pause(1000);
-        cy.get('#currentPrevJob').should("have.value", pvJob);
-        cy.get('#currentPrevJob').clear().type(new_job);
+        cy.get("#currentPrevJob").should("have.value", pvJob);
+        cy.get("#currentPrevJob").clear().type(new_job);
         BasePage.pause(500);
         cy.get("button.btn.btn-primary.btn-lg").contains("Save Change").click();
         BasePage.pause(1000);
         cy.get("div").contains(new_job).should("be.visible");
         cy.get("center > .btn").contains("Change data").click();
         BasePage.pause(1000);
-        cy.get('#currentPrevJob').clear().type(pvJob);
+        cy.get("#currentPrevJob").clear().type(pvJob);
         BasePage.pause(500);
         cy.get("button.btn.btn-primary.btn-lg").contains("Save Change").click();
-      })
+      });
     });
 
     it("Disable/Enable a Driver", () => {
       let alea2 = Math.floor(Math.random() * 13) + 1;
-      BasePage.getEyeByRowNumber(alea2)
+      BasePage.getEyeByRowNumber(alea2);
       cy.get("button.btn.btn-outline-danger.btn-lg")
         .contains("Disable driver")
         .click();
-      BasePage.pause(3000)
-      cy.get(`tbody > :nth-child(${alea2}) > :nth-child(7)`).should('contain','admin@almady.com')
-      BasePage.getEyeByRowNumber(alea2)
+      BasePage.pause(3000);
+      cy.get(`tbody > :nth-child(${alea2}) > :nth-child(7)`).should(
+        "contain",
+        "admin@almady.com"
+      );
+      BasePage.getEyeByRowNumber(alea2);
       cy.get("button.btn.btn-outline-success.btn-lg")
         .contains("Enable driver")
         .should("be.visible")
@@ -633,10 +646,9 @@ context.skip("Driver", () => {
   });
 });
 
-context("Driver - Fleet", () => {
-
+context.skip("Driver - Fleet", () => {
   //ne fonctionne pas
-  describe.skip("Register a Driver[Linked to a Fleet]", () => {
+  describe("Register a Driver[Linked to a Fleet]", () => {
     let cell_phone_number = LoginPage.Generate_Number(10);
     let pren = FirstName[Math.floor(Math.random() * FirstName.length)];
     let prenom = pren + "-" + LoginPage.Generate_Number(4);
@@ -652,12 +664,11 @@ context("Driver - Fleet", () => {
     let brand = Truck_Brandz[Math.floor(Math.random() * Truck_Brandz.length)];
     let Model = Truck_Models[Math.floor(Math.random() * Truck_Models.length)];
 
-    before(function () {
+    beforeEach(() => {
       LoginPage.load();
       LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
       BasePage.pause(1000);
       BasePage.Sidebar();
-      BasePage.FromSidebarClick("Driver", "Register driver");
     });
 
     after(function () {
@@ -665,52 +676,33 @@ context("Driver - Fleet", () => {
       //LoginPage.logout()
     });
 
-    //sa bloque ici
-    it(`Choose a Fleet[${LOGIN_FLEET}]`, () => {
-      cy.get("button").contains("Choose a fleet").click();
+    it(`Register a Driver linked to a Fleet[Whole process] & Verify that the current driver is linked to this fleet`, () => {
+      BasePage.FromSidebarClick("Driver", "Register driver");
+      LoginPage.FillPersonalInformation(
+        prenom,
+        nom,
+        cell_phone_number,
+        email,
+        job,
+        addr,
+        true
+      );
+      LoginPage.UnselectDocument();
+      LoginPage.AddDocument();
+      LoginPage.FillVehiculeInformation(truck_regis, brand, Model);
+      LoginPage.FillThePlanning();
+      let box = "hot";
+      LoginPage.FillTransportBox(box);
+      //Choose a fleet
+      cy.get('.table-responsive > .table > tbody > :nth-child(1) > :nth-child(1)').then(($td) => {
+        fleet = $td.text()
+        cy.get(':nth-child(1) > .hover-pointer > .color-green > path').click() //Get Eye of the first element
+      })
       BasePage.pause(1000)
-      BasePage.SearchByName(LOGIN_FLEET)
-      BasePage.getEye()
-      //BasePage.pause(1000)
-    });
-
-    it("Personal Information Completion", () => {
-      //Personal Information
-      LoginPage.FillPersonalInformation(prenom,nom,cell_phone_number,email,job,addr,true)
-    });
-
-    it("Vehicule Information Completion", () => {
-      //Vehicule Information
-      LoginPage.FillVehiculeInformation(truck_regis, brand, Model)
-    });
-
-    it("Transport Box Completion", () => {
-      //transport Box
-      let box = "fragile";
-      LoginPage.FillTransportBox(box)
-    });
-
-    it("Add Documents", () => {
-      //unselect current Document
-      LoginPage.UnselectDocument()
-      //Select Document
-      LoginPage.AddDocument()
-    });
-
-    it("Fill The Planning", () => {
-      LoginPage.FillThePlanning()
-    });
-
-    it("Submit the Register", () => {
-      LoginPage.SubmitRegister()
+      LoginPage.SubmitRegister();
     });
 
     it("Validate The Task & Save Profile", () => {
-      LoginPage.load();
-      BasePage.pause(1000);
-      LoginPage.login(LOGIN_USERNAME, LOGIN_PASSWORD);
-      BasePage.pause(1000);
-      BasePage.Sidebar();
       BasePage.FromSidebarClick("Task", "Tasks");
       cy.get("td").contains(prenom).click();
       BasePage.pause(1000);
@@ -724,16 +716,6 @@ context("Driver - Fleet", () => {
       BasePage.pause(3000);
     });
 
-    it("Driver Registration should be visible in the Driver section[In Fleet Account]", () => {
-      BasePage.pause(1000);
-      LoginPage.load();
-      LoginPage.login(LOGIN_FLEET, FLEET_PASSWORD);
-      BasePage.Sidebar();
-      BasePage.FromSidebarClick("Driver", "Driver list");
-      BasePage.SearchByName(prenom)
-      BasePage.getEye()
-      cy.get("td").contains(prenom).next().contains(nom).should("be.visible");
-    });
   });
 
   describe("Register a driver[as Fleet admin]", () => {
@@ -755,16 +737,15 @@ context("Driver - Fleet", () => {
     beforeEach(() => {
       LoginPage.load();
       LoginPage.login(LOGIN_FLEET, FLEET_PASSWORD);
-      BasePage.Sidebar(); 
+      BasePage.Sidebar();
     });
-
+    /*
     after(function () {
       BasePage.pause(500);
       LoginPage.logout();
-    });
+    });*/
 
     it("Personal Information Completion & Add Documents & Vehicule Information Completion & Fill The Planning/Transport & Submit Register", () => {
-      //Personal Information
       BasePage.FromSidebarClick("Driver", "Register driver");
       LoginPage.FillPersonalInformation(
         prenom,
@@ -775,13 +756,13 @@ context("Driver - Fleet", () => {
         addr,
         true
       );
-      //unselect current Document
       LoginPage.UnselectDocument();
       LoginPage.AddDocument();
       LoginPage.FillVehiculeInformation(truck_regis, brand, Model);
       LoginPage.FillThePlanning();
       let box = "hot";
       LoginPage.FillTransportBox(box);
+      ChooseFleet()
       BasePage.pause(1000)
       LoginPage.SubmitRegister();
     });

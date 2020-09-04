@@ -3,7 +3,7 @@ import LoginPage from "../../classes/LoginPage";
 import { LOGIN_USERNAME, LOGIN_PASSWORD } from "../../classes/config";
 
 //verified the 03/09/2020
-context("User", () => {
+context.skip("User", () => {
   describe("User List", () => {
     before(function () {
       LoginPage.load();

@@ -7,7 +7,7 @@ import {
 } from "../../classes/config";
 
   //verified the 02/09/2020
-context("Trips", () => {
+context.skip("Trips", () => {
   describe("Available Trips", () => {
     before(function () {
       LoginPage.load();
