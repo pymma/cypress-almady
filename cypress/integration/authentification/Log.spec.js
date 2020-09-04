@@ -30,11 +30,6 @@ context('Authentification', () => {
             LoginPage.logout()
         })
 
-        it.skip('Forgot Password', () => {
-
-        })
-
-
     })
 
 })
