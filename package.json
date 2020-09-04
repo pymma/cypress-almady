@@ -5,24 +5,10 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run": "cypress run --spec 'cypress/integration/features/Complement.spec.js'",
-
-
-    "cy:run:chrome:dev": "cypress run --browser chrome --env DEPLOYMENT_ENV=dev",
-    "cy:run:firefox:dev": "cypress run --browser firefox --env DEPLOYMENT_ENV=dev",
-    "cy:run:electron:dev": "cypress run --browser electron --env DEPLOYMENT_ENV=dev",
-    "cy:run:testing": "cypress run --env DEPLOYMENT_ENV=testing",
-    "cy:run:chrome:testing": "cypress run --browser chrome --env DEPLOYMENT_ENV=testing",
-    "cy:run:firefox:testing": "cypress run --browser firefox --env DEPLOYMENT_ENV=testing",
-    "cy:run:electron:testing": "cypress run --browser electron --env DEPLOYMENT_ENV=testing",
-    "cy:run:staging": "cypress run  --env DEPLOYMENT_ENV=staging",
-    "cy:run:chrome:staging": "cypress run --browser chrome --env DEPLOYMENT_ENV=staging",
-    "cy:run:firefox:staging": "cypress run --browser firefox --env DEPLOYMENT_ENV=staging",
-    "cy:run:electron:staging": "cypress run --browser electron --env DEPLOYMENT_ENV=staging",
-    "cy:run:prod": "cypress run",
-    "cy:run:chrome:prod": "cypress run --browser chrome --env DEPLOYMENT_ENV=prod",
-    "cy:run:firefox:prod": "cypress run --browser firefox --env DEPLOYMENT_ENV=prod",
-    "cy:run:electron:prod": "cypress run --browser electron --env DEPLOYMENT_ENV=prod",
+    "cy:run:default": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:firefox": "cypress run --browser firefox",
+    "cy:run:electron": "cypress run --browser electron",
     "start-jenkins-server": "java -jar jenkins.war -httpPort=8080 --enable-future-java"
   },
   "keywords": [

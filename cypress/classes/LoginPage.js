@@ -62,6 +62,7 @@ export default class LoginPage {
     cy.get("button.btn.btn-primary").contains("Next").click();
   }
 
+  /*Fill Driver Personal Information based on given parameter*/
   static FillPersonalInformation(
     prenom,
     nom,
@@ -82,6 +83,7 @@ export default class LoginPage {
     cy.get('[name="completeAddress"]').clear().type(addr);
   }
 
+  /*Add drag and Drop Documents*/
   static AddDocument() {
     cy.upload_file("#idCard", "img.jpeg");
     cy.upload_file("#drivingLicenseDocument", "img.jpeg");
@@ -92,6 +94,7 @@ export default class LoginPage {
     cy.upload_file("#panCardDocument", "img.jpeg");
   }
 
+  /*Fill vehicle information based on given parameters*/
   static FillVehiculeInformation(truck_regis, brand, Model) {
     cy.get('[name="truckRegistrationNumber"]').clear().type(truck_regis);
     cy.get('[name="truckBrand"]').clear().type(brand);
@@ -99,12 +102,14 @@ export default class LoginPage {
     cy.get("#transportType").select("Small vehicle");
   }
 
+  /*Fill The Transport Box based on given box parameter*/
   static FillTransportBox(box) {
     cy.get("#allTruckType").select(box);
     cy.get("#box").select(box);
     cy.get("button.btn.btn-primary.btn-sm").contains("Add").click();
   }
 
+  /*Fill the Planning*/
   static FillThePlanning() {
     // MARDI 8h - 20h00
     cy.get("#day").select("Tuesday");
@@ -136,6 +141,7 @@ export default class LoginPage {
     cy.get("td.delete-part-row").contains("09:30 - 20:30").should("be.visible");
   }
 
+  /*Unselect drag and drop documents*/
   static UnselectDocument() {
     cy.get("#idCard").click();
     cy.get("#drivingLicenseDocument").click();
@@ -146,6 +152,7 @@ export default class LoginPage {
     cy.get("#panCardDocument").click();
   }
 
+  /*Click on the Submit Register Button*/
   static SubmitRegister() {
     BasePage.pause(1000);
     cy.get("button").contains("Register Driver").click();
