@@ -21,11 +21,13 @@ context('Authentification', () => {
             }
           });
     
-        it('Login',() => {
+        it('Login & Logout',() => {
             LoginPage.login(LOGIN_USERNAME,LOGIN_PASSWORD)
+            BasePage.pause(1000)
+            LoginPage.logout()
         })
 
-        it('Logout',() => {
+        it.skip('Logout',() => {
             LoginPage.logout()
         })
 
