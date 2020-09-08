@@ -27,10 +27,6 @@ context('Authentification', () => {
             LoginPage.logout()
         })
 
-        it.skip('Logout',() => {
-            LoginPage.logout()
-        })
-
     })
 
 })
